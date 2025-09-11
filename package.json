@@ -12,10 +12,20 @@
     "format:all": "bunx prettier . --write && bunx biome lint --write"
   },
   "dependencies": {
-    "astro": "^5.13.6"
+    "@astrojs/react": "^4.3.1",
+    "@react-spring/three": "^10.0.2",
+    "@react-three/fiber": "^9.3.0",
+    "@shadergradient/react": "^2.3.2",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "astro": "^5.13.6",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "three": "^0.180.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.3",
+    "@types/three": "^0.180.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.6",
     "prettier": "3.6.2",
