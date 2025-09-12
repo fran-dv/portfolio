@@ -6,7 +6,10 @@
 		"useIgnoreFile": false
 	},
 	"files": {
-		"ignoreUnknown": false
+		"ignoreUnknown": false,
+		"ignore": [
+			"**/*astro"
+		]
 	},
 	"formatter": {
 		"enabled": true,
