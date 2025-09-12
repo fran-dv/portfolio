@@ -12,6 +12,21 @@
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "@sections/*": [
+        "src/components/sections/*"
+      ],
+      "@layouts/*": [
+        "src/layouts/*"
+      ],
+      "@ui-components/*": [
+        "src/components/ui/*"
+      ],
+      "@react/*": [
+        "src/components/react/*"
+      ],
+      "@assets/*": [
+        "src/assets/*"
       ]
     },
     "jsx": "react-jsx",
