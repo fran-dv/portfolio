@@ -1,0 +1,26 @@
+---
+import ChevronDown from "src/assets/icons/chevrons-down.svg";
+
+const IconPaths = {
+  chevronsDown: ChevronDown,
+} as const;
+
+type IconName = keyof typeof IconPaths;
+
+interface Props {
+  name: IconName;
+  class?: string;
+}
+
+const { name, class: className = "defaultStyle", ...rest }: Props = Astro.props;
+---
+
+<img src={IconPaths[name].src} class={className} {...rest} />
+
+<style>
+  .defaultStyle {
+    width: 24px;
+    height: auto;
+    filter: var(--filter-text-primary);
+  }
+</style>
