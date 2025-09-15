@@ -1,0 +1,317 @@
+---
+import { MeshBackground } from "@ui-components/react/MeshBackground";
+import {
+  BouncingTechLogos,
+  type LogoConfig,
+} from "@ui-components/react/BouncingTechLogos";
+import reactLogo from "@/assets/technologiesLogos/react.svg";
+import typescriptLogo from "@/assets/technologiesLogos/typescript.svg";
+import astroLogo from "@/assets/technologiesLogos/astro.svg";
+import cssLogo from "@/assets/technologiesLogos/css.svg";
+import javascriptLogo from "@/assets/technologiesLogos/javascript.svg";
+import photo from "@/assets/photo.png";
+import type { CollectionEntry } from "astro:content";
+import type { HeroContent } from "@/content.config";
+import Icon from "@ui-components/Icon.astro";
+
+interface Props {
+  contentEntry: CollectionEntry<"hero">;
+}
+
+const { contentEntry }: Props = Astro.props;
+
+const contentFallback: HeroContent = {
+  name: "Francisco",
+  surname: "Della Vedova",
+  subtitle: "Front-end developer",
+};
+const content = contentEntry ? contentEntry.data : contentFallback;
+
+const logos: LogoConfig[] = [
+  {
+    src: reactLogo.src,
+    alt: "React Logo",
+    size: 80,
+    speed: 0.75,
+  },
+  {
+    src: typescriptLogo.src,
+    alt: "Typescript Logo",
+    size: 80,
+    speed: 0.75,
+  },
+
+  {
+    src: astroLogo.src,
+    alt: "Astro Logo",
+    size: 80,
+    speed: 0.75,
+  },
+  {
+    src: cssLogo.src,
+    alt: "CSS Logo",
+    size: 80,
+    speed: 0.75,
+  },
+  {
+    src: javascriptLogo.src,
+    alt: "JavaScript Logo",
+    size: 80,
+    speed: 0.75,
+  },
+];
+---
+
+<section class="container">
+  <div class="meshBackgroundWrapper">
+    <MeshBackground client:load color2="#051B18" />
+  </div>
+
+  <div class="contentWrapper">
+    <div class="contentContainer">
+      <div class="bouncingLogosWrapper">
+        <BouncingTechLogos
+          client:load
+          logos={logos}
+          logosClassName="bouncingLogo"
+        />
+      </div>
+      <div class="textContainer">
+        <div class="nameContainer">
+          <h1 class="name">
+            {content.name}
+            <br />
+            {content.surname}
+          </h1>
+        </div>
+        <div class="scrollDownContainer">
+          <button class="scrollDownButton">
+            <Icon name="chevronsDown" class="scrollDownIcon" />
+          </button>
+        </div>
+      </div>
+
+      <div class="photoContainer">
+        <img class="photo" src={photo.src} alt="Francisco Della Vedova" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .container {
+    width: 100dvw;
+    height: 100dvh;
+    position: relative;
+    display: flex;
+  }
+
+  .meshBackgroundWrapper {
+    z-index: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .contentWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+
+  .contentWrapper::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+
+    background:
+      radial-gradient(
+        ellipse at center,
+        transparent 0%,
+        rgba(0, 0, 0, 0.1) 40%,
+        rgba(0, 0, 0, 0.3) 70%,
+        rgba(0, 0, 0, 0.7) 100%
+      ),
+      linear-gradient(
+        to top,
+        rgba(5, 6, 6, 1) 25%,
+        rgba(5, 6, 6, 0.75) 35%,
+        rgba(5, 6, 6, 0.5) 45%,
+        transparent 75%
+      );
+  }
+  .contentContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+    position: relative;
+  }
+
+  .bouncingLogosWrapper {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    z-index: 0;
+    position: relative;
+  }
+
+  .bouncingLogo {
+    @media (width < 500px) {
+      width: 20px !important;
+      height: auto;
+    }
+  }
+
+  .photoContainer {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .photo {
+    position: absolute;
+    max-width: 850px;
+    width: 100%;
+    height: auto;
+    top: 0;
+    bottom: 0;
+    transform: translateY(-110%);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
+    z-index: 0;
+    mask-image: linear-gradient(
+      to bottom,
+      var(--color-bg-base) 0%,
+      var(--color-bg-base) 90%,
+      transparent 100%
+    );
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      var(--color-bg-base) 0%,
+      var(--color-bg-base) 90%,
+      transparent 100%
+    );
+
+    @media (width < 850px) {
+      max-width: 800px;
+    }
+
+    @media (width < 500px) {
+      transform: translateY(-125%) scale(1.25);
+    }
+  }
+
+  .textContainer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 1rem 1rem 1rem;
+
+    @media (width < 500px) {
+      padding: 0 0.75rem 0.75rem 0.75rem;
+    }
+  }
+
+  .nameContainer,
+  .scrollDownContainer {
+    flex: 1;
+    display: flex;
+  }
+
+  .nameContainer {
+    justify-content: flex-start;
+  }
+
+  .name {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    color: #f2f7f8;
+    font-size: clamp(3.5rem, 10dvw, 7rem);
+    text-wrap: nowrap;
+    opacity: 1;
+    line-height: 1;
+    font-optical-sizing: auto;
+    align-self: flex-start;
+    z-index: 5;
+    text-align: start;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+    @media (width < 375px) {
+      font-size: 3rem;
+    }
+  }
+
+  .scrollDownContainer {
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding-right: 1rem;
+
+    @media (width < 850px) {
+      padding-right: 0rem;
+    }
+  }
+
+  .scrollDownButton {
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    transition: transform 0.3s ease-in-out;
+    z-index: 5;
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &:hover .scrollDownIcon {
+      animation: none;
+    }
+
+    @media (width < 850px) {
+      padding: 0.25rem;
+    }
+
+    @media (width < 500px) {
+      display: none;
+    }
+  }
+
+  .scrollDownIcon {
+    filter: var(--filter-text-primary);
+    width: 6rem;
+    height: auto;
+    animation: floatDown 2.5s ease-in-out infinite;
+
+    @media (width < 850px) {
+      width: 5rem;
+    }
+  }
+
+  @keyframes floatDown {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(12px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+</style>
