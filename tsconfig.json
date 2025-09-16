@@ -1,42 +1,23 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [
-    ".astro/types.d.ts",
-    "**/*"
-  ],
-  "exclude": [
-    "dist"
-  ],
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ],
-      "@sections/*": [
-        "src/components/sections/*"
-      ],
-      "@layouts/*": [
-        "src/layouts/*"
-      ],
-      "@ui-components/*": [
-        "src/components/ui/*"
-      ],
-      "@react/*": [
-        "src/components/react/*"
-      ],
-      "@assets/*": [
-        "src/assets/*"
-      ],
-      "@utils/*": [
-        "src/utils/*"
-      ]
+      "@/*": ["src/*"],
+      "@sections/*": ["src/components/sections/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@ui-components/*": ["src/components/ui/*"],
+      "@react/*": ["src/components/react/*"],
+      "@assets/*": ["src/assets/*"],
+      "@utils/*": ["src/utils/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "allowJs": true,
     "strict": true,
     "alwaysStrict": true,
-    "erasableSyntaxOnly": true,
+    "erasableSyntaxOnly": true
   }
 }

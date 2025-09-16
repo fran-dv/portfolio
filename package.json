@@ -50,7 +50,7 @@
       "bunx prettier --write",
       "bunx eslint --fix"
     ],
-    "*.{css}": [
+    "*.css": [
       "bunx prettier --write"
     ],
     "*.+(json|yml|yaml)": [

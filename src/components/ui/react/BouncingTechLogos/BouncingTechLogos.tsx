@@ -3,7 +3,7 @@ import styles from "./BouncingTechLogos.module.css";
 import { useMediaQuery } from "@/hooks/useMediaQuery";
 
 export interface LogoConfig {
-  src: string ;
+  src: string;
   alt: string;
   size: number;
   speed?: number;
@@ -52,7 +52,7 @@ export const BouncingTechLogos: React.FC<BouncingTechLogosProps> = ({
   const originalLogosRef = useRef<LogoConfig[]>(logos);
 
   const getResponsiveLogos = () => {
-    return originalLogosRef.current.map(logo => ({
+    return originalLogosRef.current.map((logo) => ({
       ...logo,
       size: isSmallScreen ? logo.size * 0.6 : logo.size,
     }));
@@ -188,7 +188,7 @@ export const BouncingTechLogos: React.FC<BouncingTechLogosProps> = ({
       {logoStates.map((logo) => (
         <img
           key={logo.id}
-          src={logo.config.src }
+          src={logo.config.src}
           alt={logo.config.alt}
           className={`${styles.logo} ${logosClassName}`}
           style={{
