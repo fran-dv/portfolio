@@ -8,18 +8,27 @@ import markdown from "@eslint/markdown";
 import css from "@eslint/css";
 import astroPlugin from "eslint-plugin-astro";
 import prettierPlugin from "eslint-config-prettier";
+import tsParser from "@typescript-eslint/parser";
 
 export default defineConfig([
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
     languageOptions: {
+      parser: tsParser,
       globals: { ...globals.browser, ...globals.node },
-      parserOptions: { ecmaVersion: "latest", sourceType: "module" },
+      parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
+        ecmaFeatures: { jsx: true },
+      },
     },
     plugins: {
       js,
       "@typescript-eslint": tsPlugin,
       react: pluginReact,
+    },
+    settings: {
+      react: { version: "detect" },
     },
     rules: {
       ...js.configs.recommended.rules,
@@ -27,6 +36,7 @@ export default defineConfig([
       ...pluginReact.configs.recommended.rules,
       ...prettierPlugin.rules,
       "react/react-in-jsx-scope": "off",
+      "no-undef": "off",
     },
   },
   {
