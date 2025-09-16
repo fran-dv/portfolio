@@ -44,21 +44,17 @@
   },
   "lint-staged": {
     "*.astro": [
-      "bunx prettier --write",
-      "git add"
+      "bunx prettier --write"
     ],
     "*.{js,ts,jsx,tsx}": [
       "bunx prettier --write",
-      "bunx eslint --fix",
-      "git add"
+      "bunx eslint --fix"
     ],
     "*.{css}": [
-      "bunx prettier --write",
-      "git add"
+      "bunx prettier --write"
     ],
     "*.+(json|yml|yaml)": [
-      "bunx prettier --write",
-      "git add"
+      "bunx prettier --write"
     ]
   }
 }
