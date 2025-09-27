@@ -11,7 +11,9 @@
       "@ui-components/*": ["src/components/ui/*"],
       "@react/*": ["src/components/react/*"],
       "@assets/*": ["src/assets/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@content/*": ["src/content/*"],
+      "@hooks/*": ["src/hooks/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react",
