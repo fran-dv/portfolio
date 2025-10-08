@@ -1,17 +1,21 @@
 ---
+import "@/styles/global.css";
+
 interface Props {
+  locale: "en" | "es";
   title?: string;
   description?: string;
 }
 
 const {
+  locale,
   title = "Francisco Della Vedova - Frontend developer",
   description = "Portfolio of Francisco Della Vedova, frontend developer showcasing skills in React, TypeScript, and modern web technologies.",
 }: Props = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={locale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -29,35 +33,5 @@ const {
   @import url("https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap");
   @import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap");
   @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  :root {
-    --color-bg-base: #050606;
-    --color-bg-surface: #0e1718;
-
-    --color-brand-primary: #00d8c0;
-    --color-brand-accent: #7b5cff;
-    --color-brand-secondary: #ff5e73;
-
-    --color-text-primary: #f2f7f8;
-    --color-text-secondary: #aebcc0;
-    --filter-text-primary: brightness(0) saturate(100%) invert(87%) sepia(38%)
-      saturate(10%) hue-rotate(187deg) brightness(103%) contrast(100%);
-
-    --color-feedback-success: #4ade80;
-    --color-feedback-warning: #facc15;
-    --color-feedback-error: #ef4444;
-    --color-feedback-info: #38bdf8;
-  }
-
-  body {
-    width: 100%;
-    min-height: 100dvh;
-    overflow-x: hidden;
-  }
+  @import "tailwindcss";
 </style>
