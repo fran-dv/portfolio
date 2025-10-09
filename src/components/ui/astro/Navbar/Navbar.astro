@@ -1,0 +1,209 @@
+---
+import { getEntry } from "astro:content";
+import { LanguageSwitcher } from "./components/LanguageSwitcher";
+import { type Locale } from "@/i18n/locales";
+import type { NavbarContent } from "@content/navbar/schema";
+import { FileTextIcon } from "@radix-ui/react-icons";
+import { MobileNavMenu } from "./components/MobileNavMenu/MobileNavMenu";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { MainPageAnchors } from "@/routing/paths";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale }: Props = Astro.props;
+const entry = await getEntry("navbar", locale);
+if (!entry) {
+  throw new Error(`No entry found for locale: ${locale}`);
+}
+const content: NavbarContent = entry.data;
+const currentPath = Astro.url.pathname;
+
+export interface NavLink {
+  label: string;
+  ariaLabel: string;
+  link: string;
+}
+
+const navLinks: NavLink[] = [
+  {
+    label: content.homeLink,
+    ariaLabel: "Home section link",
+    link: getRelativeLocaleUrl(locale, MainPageAnchors.Hero),
+  },
+  {
+    label: content.projectsLink,
+    ariaLabel: "Projects section link",
+    link: getRelativeLocaleUrl(locale, MainPageAnchors.Projects),
+  },
+  {
+    label: content.aboutLink,
+    ariaLabel: "About page link",
+    link: getRelativeLocaleUrl(locale, MainPageAnchors.About),
+  },
+  {
+    label: content.contactLink,
+    ariaLabel: "Contact page link",
+    link: getRelativeLocaleUrl(locale, MainPageAnchors.Contact),
+  },
+];
+---
+
+<header class="wrapper">
+  <nav class="container">
+    <ul class="linksContainer">
+      {
+        navLinks.map(({ label, ariaLabel, link }) => (
+          <li>
+            <a href={link} aria-label={ariaLabel}>
+              {label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <MobileNavMenu navLinks={navLinks} client:visible />
+
+    <div class="buttonsContainer">
+      <a
+        class="cvLink"
+        href={`/cv/cv_${locale}.pdf`}
+        download={`Francisco_Della_Vedova_${locale}.pdf`}
+      >
+        <FileTextIcon client:load className="icon" />
+        {content.cvLink}
+      </a>
+      <LanguageSwitcher
+        client:load
+        currentLocale={locale}
+        currentPath={currentPath}
+        languagesLabel={content.languagesLabel}
+      />
+    </div>
+  </nav>
+</header>
+
+<style>
+  .wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    align-items: center;
+    padding: 1.5rem 5rem;
+
+    @media (width < 1000px) {
+      padding: 1.5rem 3rem;
+    }
+    @media (width < 850px) {
+      padding: 1.5rem;
+    }
+    @media (width < 780px) {
+      padding: 1rem;
+    }
+  }
+  .container {
+    --navbar-buttons-padding: 0.5rem 1rem;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+    border-radius: 100rem;
+    max-width: 1400px;
+    position: relative;
+
+    background: rgba(14, 23, 24, 0.83);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8.7px);
+    -webkit-backdrop-filter: blur(8.7px);
+    border: var(--glass-border);
+
+    @media (width < 768px) {
+      padding: 0.25rem 0.25rem 0.25rem 1.25rem;
+    }
+  }
+
+  .linksContainer {
+    display: flex;
+    gap: 1rem;
+    justify-content: start;
+    align-items: center;
+    list-style-type: none;
+    flex-grow: 1;
+
+    a {
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--color-text-primary);
+      transition: color 0.1s ease-in-out;
+    }
+
+    a:hover {
+      color: var(--color-brand-accent);
+    }
+
+    @media (width < 768px) {
+      display: none;
+    }
+  }
+
+  .buttonsContainer {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    gap: 1rem;
+
+    @media (width < 768px) {
+      gap: 0.5rem;
+    }
+  }
+
+  .cvLink {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: var(--color-brand-accent);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    transition:
+      background-color 0.1s ease-in-out,
+      color 0.1s ease-in-out;
+    border-radius: 10rem;
+    padding: var(--navbar-buttons-padding);
+    border: var(--glass-border);
+
+    &:hover {
+      background-color: var(--color-brand-accent);
+      color: var(--color-text-contrast);
+    }
+
+    .icon {
+      width: var(--text-lg);
+      height: var(--text-lg);
+    }
+
+    @media (width < 768px) {
+      font-size: var(--text-xs);
+    }
+  }
+
+  a,
+  h2 {
+    color: var(--color-text-primary);
+  }
+
+  h2 {
+    font-weight: 600;
+    font-size: 1.5rem;
+  }
+  a {
+    font-style: none;
+    text-decoration: none;
+  }
+</style>
