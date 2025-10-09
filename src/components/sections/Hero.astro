@@ -1,81 +1,44 @@
 ---
-import { MeshBackground } from "@ui-components/react/MeshBackground";
-import {
-  BouncingTechLogos,
-  type LogoConfig,
-} from "@ui-components/react/BouncingTechLogos";
-import reactLogo from "@/assets/technologiesLogos/react.svg";
-import typescriptLogo from "@/assets/technologiesLogos/typescript.svg";
-import astroLogo from "@/assets/technologiesLogos/astro.svg";
-import cssLogo from "@/assets/technologiesLogos/css.svg";
-import javascriptLogo from "@/assets/technologiesLogos/javascript.svg";
-import photo from "@/assets/photo.png";
 import type { CollectionEntry } from "astro:content";
-import type { HeroContent } from "@/content.config";
+import photo from "@assets/photo.webp";
 import Icon from "@ui-components/Icon.astro";
+import { BubbleBackground } from "@ui-components/react/BubbleBackground";
 
 interface Props {
   contentEntry: CollectionEntry<"hero">;
 }
 
 const { contentEntry }: Props = Astro.props;
-
-const contentFallback: HeroContent = {
-  name: "Francisco",
-  surname: "Della Vedova",
-  subtitle: "Front-end developer",
-};
-const content = contentEntry ? contentEntry.data : contentFallback;
-
-const logos: LogoConfig[] = [
-  {
-    src: reactLogo.src,
-    alt: "React Logo",
-    size: 80,
-    speed: 0.75,
-  },
-  {
-    src: typescriptLogo.src,
-    alt: "Typescript Logo",
-    size: 80,
-    speed: 0.75,
-  },
-
-  {
-    src: astroLogo.src,
-    alt: "Astro Logo",
-    size: 80,
-    speed: 0.75,
-  },
-  {
-    src: cssLogo.src,
-    alt: "CSS Logo",
-    size: 80,
-    speed: 0.75,
-  },
-  {
-    src: javascriptLogo.src,
-    alt: "JavaScript Logo",
-    size: 80,
-    speed: 0.75,
-  },
-];
+const content = contentEntry.data;
 ---
 
-<section class="container">
-  <div class="meshBackgroundWrapper">
-    <MeshBackground client:load color2="#051B18" />
+<section class="container" id="hero">
+  <div class="backgroundWrapper">
+    <BubbleBackground
+      client:visible
+      client:media="(min-width: 768px)"
+      className="bubbleBackground"
+      interactive
+      colors={{
+        first: "0, 216, 192",
+        second: "123, 92, 255",
+        third: "250, 204, 21",
+        fourth: "0, 168, 255",
+        fifth: "255, 94, 115",
+        sixth: "0, 216, 192",
+      }}
+    />
   </div>
 
   <div class="contentWrapper">
     <div class="contentContainer">
-      <div class="bouncingLogosWrapper">
-        <BouncingTechLogos
-          client:load
-          logos={logos}
-          logosClassName="bouncingLogo"
-        />
-      </div>
+      <img
+        class="photo"
+        src={photo.src}
+        alt="Francisco Della Vedova"
+        draggable="false"
+      />
+
       <div class="textContainer">
         <div class="nameContainer">
           <h1 class="name">
@@ -90,29 +53,32 @@ const logos: LogoConfig[] = [
           </button>
         </div>
       </div>
-
-      <div class="photoContainer">
-        <img class="photo" src={photo.src} alt="Francisco Della Vedova" />
-      </div>
     </div>
   </div>
 </section>
 
 <style>
   .container {
-    width: 100dvw;
-    height: 100dvh;
-    position: relative;
+    min-width: 100dvw;
+    min-height: 100dvh;
+    width: 100%;
+    height: 100%;
     display: flex;
+    position: relative;
+    overflow-x: hidden;
   }
 
-  .meshBackgroundWrapper {
-    z-index: 0;
+  .backgroundWrapper {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+
+    .bubbleBackground {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .contentWrapper {
@@ -122,6 +88,7 @@ const logos: LogoConfig[] = [
     width: 100%;
     height: 100%;
     z-index: 2;
+    pointer-events: none;
   }
 
   .contentWrapper::before {
@@ -132,6 +99,7 @@ const logos: LogoConfig[] = [
     width: 100%;
     height: 100%;
     z-index: 1;
+    pointer-events: none;
 
     background:
       radial-gradient(
@@ -175,23 +143,19 @@ const logos: LogoConfig[] = [
     }
   }
 
-  .photoContainer {
-    position: relative;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
   .photo {
     position: absolute;
-    max-width: 850px;
+    max-width: 725px;
+    aspect-ratio: 1;
     width: 100%;
     height: auto;
-    top: 0;
     bottom: 0;
-    transform: translateY(-110%);
+    left: 50%;
+    transform: translateX(-50%) translateY(-15%);
     filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.3));
     z-index: 0;
+    user-select: none;
+    -webkit-user-drag: none;
     mask-image: linear-gradient(
       to bottom,
       var(--color-bg-base) 0%,
@@ -205,16 +169,26 @@ const logos: LogoConfig[] = [
       transparent 100%
     );
 
+    @media (width < 1200px) {
+      max-width: 700px;
+    }
+
+    @media (width < 1000px) {
+      max-width: 675px;
+    }
+
     @media (width < 850px) {
-      max-width: 800px;
+      max-width: 600px;
     }
 
     @media (width < 500px) {
-      transform: translateY(-125%) scale(1.25);
+      transform: translateX(-50%) translateY(-27%);
     }
   }
 
   .textContainer {
+    position: absolute;
+    bottom: 0;
     width: 100%;
     display: flex;
     justify-content: flex-start;
@@ -238,7 +212,7 @@ const logos: LogoConfig[] = [
   .name {
     font-family: "Inter", sans-serif;
     font-weight: 600;
-    color: #f2f7f8;
+    color: var(--color-text-primary);
     font-size: clamp(3.5rem, 10dvw, 7rem);
     text-wrap: nowrap;
     opacity: 1;
@@ -274,6 +248,7 @@ const logos: LogoConfig[] = [
     justify-content: center;
     padding: 1rem;
     transition: transform 0.3s ease-in-out;
+    pointer-events: all;
     z-index: 5;
     &:hover {
       transform: scale(1.1);
