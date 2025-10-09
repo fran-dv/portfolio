@@ -6,8 +6,6 @@ import {
   useSpring,
 } from "motion/react";
 import clsx from "clsx";
-import { useIsMobile } from "@hooks/useIsMobile";
-import staticBg from "@assets/static-mesh-bg.webp";
 
 interface Props extends React.ComponentProps<"div"> {
   interactive?: boolean;
@@ -38,8 +36,6 @@ export const BubbleBackground: React.FC<Props> = ({
   },
   ...props
 }: Props) => {
-  const getIsMobile = useIsMobile();
-
   const containerRef = React.useRef<HTMLDivElement>(null);
   React.useImperativeHandle(ref, () => containerRef.current as HTMLDivElement);
 
@@ -66,10 +62,6 @@ export const BubbleBackground: React.FC<Props> = ({
     return () =>
       currentContainer?.removeEventListener("mousemove", handleMouseMove);
   }, [interactive, mouseX, mouseY]);
-
-  if (getIsMobile()) {
-    return <img src={staticBg.src} width="100%" height="100%" />;
-  }
 
   return (
     <div
