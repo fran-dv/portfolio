@@ -1,0 +1,12 @@
+# Treat all text files as normalized
+* text=auto
+
+*.js     text
+*.ts     text
+*.jsx    text
+*.tsx    text
+*.css    text
+*.html   text
+*.json   text
+*.md     text
+*.astro  text
