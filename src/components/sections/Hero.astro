@@ -43,9 +43,10 @@ const content = contentEntry.data;
         <div class="nameContainer">
           <h1 class="name">
             {content.name}
-            <br />
-            {content.surname}
           </h1>
+          <h2 class="jobTitle">
+            {content.jobTitle}
+          </h2>
         </div>
         <div class="scrollDownContainer">
           <button class="scrollDownButton">
@@ -128,21 +129,6 @@ const content = contentEntry.data;
     position: relative;
   }
 
-  .bouncingLogosWrapper {
-    width: 100%;
-    height: 100%;
-    flex: 1;
-    z-index: 0;
-    position: relative;
-  }
-
-  .bouncingLogo {
-    @media (width < 500px) {
-      width: 20px !important;
-      height: auto;
-    }
-  }
-
   .photo {
     position: absolute;
     max-width: 725px;
@@ -192,10 +178,10 @@ const content = contentEntry.data;
     width: 100%;
     display: flex;
     justify-content: flex-start;
-    padding: 0 1rem 1rem 1rem;
+    padding: 0 1rem 1.25rem 1.25rem;
 
     @media (width < 500px) {
-      padding: 0 0.75rem 0.75rem 0.75rem;
+      padding: 0 0.5rem 0.5rem 0.75rem;
     }
   }
 
@@ -206,15 +192,24 @@ const content = contentEntry.data;
   }
 
   .nameContainer {
-    justify-content: flex-start;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.5rem;
+
+    @media (width < 500px) {
+      gap: 0.25rem;
+    }
   }
 
   .name {
-    font-family: "Inter", sans-serif;
-    font-weight: 600;
+    font-weight: 300;
     color: var(--color-text-primary);
-    font-size: clamp(3.5rem, 10dvw, 7rem);
+    font-family: var(--font-title);
+    font-size: clamp(3.5rem, 10dvw, 6rem);
+    letter-spacing: 6px;
     text-wrap: nowrap;
+    text-transform: uppercase;
     opacity: 1;
     line-height: 1;
     font-optical-sizing: auto;
@@ -223,8 +218,28 @@ const content = contentEntry.data;
     text-align: start;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
-    @media (width < 375px) {
-      font-size: 3rem;
+    @media (width < 500px) {
+      font-size: 3.5rem;
+      letter-spacing: 2px;
+    }
+  }
+
+  .jobTitle {
+    font-weight: 400;
+    color: var(--color-text-primary);
+    font-size: clamp(2.5rem, 7dvw, 3.5rem);
+    text-wrap: nowrap;
+    opacity: 1;
+    line-height: 1;
+    font-optical-sizing: auto;
+    font-style: italic;
+    align-self: flex-start;
+    z-index: 5;
+    text-align: start;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+    @media (width < 500px) {
+      font-size: 2rem;
     }
   }
 
