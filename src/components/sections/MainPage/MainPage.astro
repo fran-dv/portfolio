@@ -1,0 +1,33 @@
+---
+import Hero from "./components/Hero.astro";
+import About from "./components/About.astro";
+import ProjectsCTABanner from "./components/ProjectsCTABanner.astro";
+import { getEntry } from "astro:content";
+
+interface Props {
+  locale: "en" | "es";
+}
+const { locale }: Props = Astro.props;
+
+const heroContent = await getEntry("hero", locale);
+const aboutContent = await getEntry("about", locale);
+const projectsCTABannerContent = await getEntry("projectsCTABanner", locale);
+if (!heroContent || !aboutContent || !projectsCTABannerContent) {
+  throw new Error(
+    `Content entry not found. Missing entry of section: ${!heroContent ? "Hero" : !aboutContent ? "About" : "Projects Call To Action Banner"}`,
+  );
+}
+---
+
+<main>
+  <Hero contentEntry={heroContent!} />
+  <ProjectsCTABanner contentEntry={projectsCTABannerContent!} />
+  <About contentEntry={aboutContent!} />
+</main>
+
+<style>
+  main {
+    width: 100%;
+    height: 100%;
+  }
+</style>
