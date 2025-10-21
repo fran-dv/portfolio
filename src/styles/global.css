@@ -13,8 +13,6 @@
 
   body {
     width: 100%;
-    min-width: 100dvw;
-    min-height: 100dvh;
     overflow-x: hidden;
   }
 
@@ -29,7 +27,12 @@
 
 @theme {
   --color-bg-base: #050606;
+  --filter-bg-base: brightness(0) saturate(100%) invert(3%) sepia(1%)
+    saturate(1%) hue-rotate(206deg) brightness(98%) contrast(101%);
   --color-bg-surface: #0e1718;
+  --color-bg-darker: #000;
+  --filter-bg-darker: brightness(0) saturate(100%) invert(0%) sepia(67%)
+    saturate(6904%) hue-rotate(101deg) brightness(100%) contrast(101%);
 
   --color-brand-primary: #00d8c0;
   --color-brand-accent: #7b5cff;
