@@ -1,14 +1,15 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
-import { heroContentSchema } from "@content/hero/schema";
+import { HeroContentSchema } from "@content/hero/schema";
 import { NavbarSchema } from "@content/navbar/schema";
+import { AboutContentSchema } from "./content/about/schema";
 
 const hero = defineCollection({
   loader: glob({
     pattern: "*.json",
     base: "src/content/hero",
   }),
-  schema: heroContentSchema,
+  schema: HeroContentSchema,
 });
 
 const navbar = defineCollection({
@@ -19,4 +20,19 @@ const navbar = defineCollection({
   schema: NavbarSchema,
 });
 
-export const collections = { hero, navbar };
+const about = defineCollection({
+  loader: glob({
+    pattern: "*.json",
+    base: "src/content/about",
+  }),
+  schema: AboutContentSchema,
+});
+
+const projectsCTABanner = defineCollection({
+  loader: glob({
+    pattern: "*.json",
+    base: "src/content/projectsCTABanner",
+  }),
+});
+
+export const collections = { hero, navbar, about, projectsCTABanner };
