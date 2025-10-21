@@ -1,0 +1,21 @@
+{
+  "title": "See what I've been building...",
+  "ctaButton": "See projects",
+  "projects": [
+    {
+      "id": "1",
+      "title": "BCH Connect",
+      "description": "React library to seamlessly connect BCH wallets"
+    },
+    {
+      "id": "2",
+      "title": "Zorro viejo",
+      "description": "Beverages distributor mobile-first e-commerce"
+    },
+    {
+      "id": 3,
+      "title": "Mini dApp",
+      "description": "Ethereum dApp built for a technical challenge"
+    }
+  ]
+}
