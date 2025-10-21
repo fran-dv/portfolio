@@ -8,12 +8,15 @@
       "@/*": ["src/*"],
       "@sections/*": ["src/components/sections/*"],
       "@layouts/*": ["src/layouts/*"],
-      "@ui-components/*": ["src/components/ui/*"],
-      "@react/*": ["src/components/react/*"],
+      "@ui-components/*": [
+        "src/components/ui/*",
+        "src/components/ui/*/*/index.ts"
+      ],
+      "@react/*": ["src/components/react/*", "src/components/react/*/index.ts"],
       "@assets/*": ["src/assets/*"],
       "@utils/*": ["src/utils/*"],
-      "@content/*": ["src/content/*"],
-      "@hooks/*": ["src/hooks/*"]
+      "@content/*": ["src/content/*", "src/content/*/index.ts"],
+      "@hooks/*": ["src/hooks/*", "src/hooks/*/index.ts"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react",
