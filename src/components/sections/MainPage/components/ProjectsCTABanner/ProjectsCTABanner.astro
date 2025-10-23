@@ -1,0 +1,239 @@
+---
+import { ParticlesBackground } from "@ui-components/react/ParticlesBackground";
+import type { CollectionEntry } from "astro:content";
+import type { ProjectsCTABannerContent } from "@content/projectsCTABanner/schema";
+import project1Preview from "@assets/projects/previews/project-1-preview.png";
+import project2Preview from "@assets/projects/previews/project-2-preview.png";
+import project3Preview from "@assets/projects/previews/project-3-preview.png";
+import ProjectPreviewCard from "./components/ProjectPreviewCard.astro";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Icon from "@ui-components/astro/Icon/Icon.astro";
+
+interface Props {
+  contentEntry: CollectionEntry<"projectsCTABanner">;
+}
+
+const { contentEntry } = Astro.props;
+const locale = Astro.currentLocale;
+const content: ProjectsCTABannerContent = contentEntry.data;
+
+const previews = [project1Preview, project2Preview, project3Preview];
+const projectsData = content.projects
+  .map((p, idx) => ({
+    title: p.title,
+    description: p.description,
+    url: getRelativeLocaleUrl(locale!, "projects"),
+    image: previews[idx],
+  }))
+  .slice(0, 2);
+---
+
+<div class="container">
+  <div class="bgWrapper">
+    <ParticlesBackground
+      client:visible
+      moveParticlesOnHover={true}
+      particleSpread={20}
+    />
+  </div>
+  <h2 class="title">{content.title}</h2>
+  <div class="contentContainer">
+    <ul class="projectsPreviewList">
+      {
+        projectsData.map((p) => {
+          return (
+            <li>
+              <ProjectPreviewCard
+                image={p.image}
+                alt={`Preview of project ${p.title}`}
+                projectTitle={p.title}
+                projectDescription={p.description}
+                projectUrl={p.url}
+              />
+            </li>
+          );
+        })
+      }
+    </ul>
+    <button class="ctaButton"
+      >{content.ctaButton}<Icon name="arrowRight" class="ctaIcon" /></button
+    >
+
+    <style>
+      .container {
+        --height: 16rem;
+        position: relative;
+        min-width: 100dvw;
+        min-height: var(--height);
+        max-height: var(--height);
+        padding-top: 3rem;
+        padding-bottom: 1rem;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--color-bg-base);
+
+        @media (width < 768px) {
+          --height: 14rem;
+        }
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+          background: #050606;
+          background: linear-gradient(
+            0deg,
+            rgba(5, 6, 6, 0) 69%,
+            rgba(5, 6, 6, 0.87) 92%,
+            rgba(5, 6, 6, 1) 100%
+          );
+          pointer-events: none;
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: 1;
+          pointer-events: none;
+          background: #050606;
+          background: linear-gradient(
+            180deg,
+            rgba(5, 6, 6, 0) 69%,
+            rgba(5, 6, 6, 0.87) 92%,
+            rgba(5, 6, 6, 1) 100%
+          );
+        }
+      }
+
+      .bgWrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .title {
+        position: absolute;
+        top: 0.5rem;
+        left: 50%;
+        transform: translateX(-50%);
+        color: var(--color-text-primary);
+        font-weight: 300;
+        font-style: italic;
+        z-index: 10;
+        font-size: 1.5rem;
+        text-wrap: nowrap;
+
+        @media (width < 768px) {
+          top: 1.25rem;
+          font-size: 1rem;
+        }
+      }
+
+      .contentContainer {
+        position: relative;
+        display: flex;
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+        justify-content: space-around;
+        align-items: center;
+        z-index: 100;
+        padding: 1rem 6rem;
+        pointer-events: none;
+
+        @media (width < 1000px) {
+          padding: 1rem 4rem;
+        }
+
+        @media (width < 768px) {
+          padding: 1rem;
+        }
+      }
+
+      .projectsPreviewList {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+
+        li {
+          pointer-events: auto;
+          color: white;
+        }
+
+        li:nth-child(2) {
+          margin: 0 auto;
+        }
+
+        @media (width < 850px) {
+          li:last-child {
+            display: none;
+          }
+        }
+      }
+
+      .ctaButton {
+        width: 100%;
+        max-width: 200px;
+        pointer-events: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.75rem 1rem;
+        color: var(--color-bg-base);
+        background-color: var(--color-text-contrast);
+        font-size: var(--text-lg);
+        border-radius: 1rem;
+        font-weight: 600;
+        transition: transform 0.2s ease-in-out;
+        margin-left: 0;
+
+        overflow: hidden;
+        box-shadow: 0 0 16px rgba(255, 255, 255, 0.4);
+        animation: pulseLight 3s ease-in-out infinite;
+
+        .icon {
+          filter: var(--filter-bg-base);
+        }
+
+        &:hover {
+          transform: scale(1.03);
+          background-color: var(--color-text-primary);
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.45);
+        }
+
+        @media (width < 768px) {
+          max-width: 150px;
+          padding: 0.5rem 0.75rem;
+
+          font-size: var(--text-sm);
+        }
+      }
+
+      @keyframes pulseLight {
+        0%,
+        100% {
+          box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+        }
+        50% {
+          box-shadow: 0 0 18px rgba(255, 255, 255, 0.45);
+        }
+      }
+    </style>
+  </div>
+</div>
