@@ -1,0 +1,93 @@
+---
+import { Image } from "astro:assets";
+import { LinkWrapper } from "@ui-components/react/LinkWrapper";
+
+interface Props {
+  image: ImageMetadata;
+  alt: string;
+  projectTitle: string;
+  projectDescription: string;
+  projectUrl: string;
+}
+
+const { image, alt, projectDescription, projectTitle, projectUrl } =
+  Astro.props;
+---
+
+<div class:list={["container", "glass", "glass-border"]}>
+  <LinkWrapper client:load disableOnMobile={true} url={projectUrl}>
+    <Image class={"projectPreviewImg"} src={image} alt={alt} />
+    <div class="infoContainer">
+      <h4>{projectTitle}</h4>
+      <p>{projectDescription}</p>
+    </div>
+  </LinkWrapper>
+</div>
+
+<style>
+  .container {
+    display: flex;
+    flex-direction: column;
+    max-width: 200px;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease-in-out;
+    background-color: transparent;
+    cursor: pointer;
+
+    .projectPreviewImg {
+      width: 100%;
+      height: auto;
+      border-radius: 1rem;
+    }
+
+    .infoContainer {
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      padding: 0 0.5rem 0.5rem 0.75rem;
+      max-height: 0;
+      transition: all 0.2s ease-in-out;
+      h4 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--color-text-primary);
+      }
+      p {
+        font-size: 0.75rem;
+        color: var(--color-text-primary);
+        font-style: italic;
+      }
+
+      @media (width < 768px) {
+        padding: 0.25rem 0.25rem 0.25rem 0.5rem;
+        h4 {
+          font-size: 0.75rem;
+        }
+        p {
+          font-size: 0.5rem;
+        }
+      }
+    }
+
+    &:hover {
+      transform: scale(1.5);
+
+      .projectPreviewImg {
+        border-radius: 0.5rem 0.5rem 0 0;
+      }
+
+      .infoContainer {
+        display: flex;
+        visibility: visible;
+        opacity: 1;
+        transform: scale(1);
+        max-height: 200px;
+      }
+    }
+
+    @media (width < 768px) {
+      max-width: 150px;
+      transform-origin: left;
+    }
+  }
+</style>
