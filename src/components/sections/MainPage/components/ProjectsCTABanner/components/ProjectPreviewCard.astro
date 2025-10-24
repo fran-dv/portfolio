@@ -37,14 +37,13 @@ const { image, alt, projectDescription, projectTitle, projectUrl } =
     .projectPreviewImg {
       width: 100%;
       height: auto;
-      border-radius: 1rem;
+      border-radius: 0.5rem;
     }
 
     .infoContainer {
       display: flex;
       flex-direction: column;
       opacity: 0;
-      padding: 0 0.5rem 0.5rem 0.75rem;
       max-height: 0;
       transition: all 0.2s ease-in-out;
       h4 {
@@ -77,6 +76,7 @@ const { image, alt, projectDescription, projectTitle, projectUrl } =
       }
 
       .infoContainer {
+        padding: 0.1rem 0.25rem 0.5rem 0.5rem;
         display: flex;
         visibility: visible;
         opacity: 1;
