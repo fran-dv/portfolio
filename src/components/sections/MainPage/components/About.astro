@@ -1,0 +1,153 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ImagesMarquee from "@ui-components/astro/ImagesMarquee/ImagesMarquee.astro";
+import AstroLogo from "@assets/technologiesLogos/astro.svg";
+import ReactLogo from "@assets/technologiesLogos/react.svg";
+import TsLogo from "@assets/technologiesLogos/typescript.svg";
+import JsLogo from "@assets/technologiesLogos/javascript.svg";
+import CSSLogo from "@assets/technologiesLogos/css.svg";
+import GitLogo from "@assets/technologiesLogos/git.svg";
+import HTMLLogo from "@assets/technologiesLogos/html.svg";
+import LinuxLogo from "@assets/technologiesLogos/linux.svg";
+import PostgreSQLLogo from "@assets/technologiesLogos/postgresql.svg";
+import SupabaseLogo from "@assets/technologiesLogos/supabase.svg";
+import TailwindLogo from "@assets/technologiesLogos/tailwind.svg";
+import TestingLibraryLogo from "@assets/technologiesLogos/testing-library.svg";
+import ZodLogo from "@assets/technologiesLogos/zod.svg";
+import ZustandLogo from "@assets/technologiesLogos/zustand.svg";
+import VitestLogo from "@assets/technologiesLogos/vitest.svg";
+
+interface Props {
+  contentEntry: CollectionEntry<"about">;
+}
+
+const { contentEntry }: Props = Astro.props;
+const content = contentEntry.data;
+
+const paragraph1Parts = content.paragraph1.split("{bitcoinCashLink}");
+
+const technologiesLogos1 = [
+  ReactLogo,
+  TsLogo,
+  JsLogo,
+  AstroLogo,
+  CSSLogo,
+  HTMLLogo,
+  GitLogo,
+  TailwindLogo,
+];
+
+const technologiesLogos2 = [
+  LinuxLogo,
+  ZodLogo,
+  PostgreSQLLogo,
+  TestingLibraryLogo,
+  ZustandLogo,
+  VitestLogo,
+  SupabaseLogo,
+];
+---
+
+<section id="about" class="wrapper">
+  <div class="container">
+    <h1>{content.title}</h1>
+
+    <div class="contentContainer">
+      <p class:list={["paragraph", "one"]}>
+        {paragraph1Parts[0]}
+        <a class="link bch" href="https://whatisbitcoin.cash" target="_blank"
+          >{content.bitcoinCashLink}</a
+        >
+        {paragraph1Parts[1]}
+      </p>
+      <p class:list={["paragraph", "two"]}>
+        {content.paragraph2}
+      </p>
+
+      <div class="marqueesContainer">
+        <ImagesMarquee
+          direction="left"
+          speed={25}
+          imagesSVGs={technologiesLogos1}
+        />
+        <ImagesMarquee
+          direction="right"
+          speed={25}
+          imagesSVGs={technologiesLogos2}
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 50vh;
+    display: flex;
+    background-color: var(--color-bg-base);
+    padding: 1.5rem 0;
+  }
+
+  .container {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: var(--content-max-width);
+    padding: 0 var(--content-padding-screen-l);
+
+    @media (width < 768px) {
+      padding: 0 var(--content-padding-screen-m);
+    }
+  }
+
+  h1 {
+    color: var(--color-text-primary);
+    font-family: var(--font-title);
+    font-size: 3rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    @media (width < 768px) {
+      font-size: 2rem;
+    }
+  }
+
+  .contentContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .paragraph {
+    color: var(--color-text-primary);
+    font-size: 1.5rem;
+    font-weight: 500;
+
+    @media (width < 768px) {
+      font-size: 1rem;
+    }
+  }
+
+  .paragraph.one {
+    .bch::before {
+      background-color: #0ac18e;
+    }
+  }
+
+  .paragraph.two {
+  }
+
+  .marqueesContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+
+    @media (width < 768px) {
+      margin-top: 0;
+    }
+  }
+</style>
