@@ -21,7 +21,7 @@ export const MobileNavMenu = ({ navLinks }: Props) => {
           />
         </Dialog.Trigger>
         <Dialog.Portal>
-          <Dialog.Content className="glass absolute top-0 z-50 flex h-[100dvh] w-[100dvw] flex-col p-4 px-6 pt-[25dvh] transition-opacity duration-300 ease-in-out data-[state=closed]:animate-[fadeOut_0.2s_ease-in-out] data-[state=open]:animate-[fadeIn_0.2s_ease-in-out]">
+          <Dialog.Content className="glass fixed top-0 z-50 flex h-[100dvh] w-[100dvw] flex-col p-4 px-6 pt-[25dvh] transition-opacity duration-300 ease-in-out data-[state=closed]:animate-[fadeOut_0.2s_ease-in-out] data-[state=open]:animate-[fadeIn_0.2s_ease-in-out]">
             <Dialog.Title className="hidden">Navigaion menu</Dialog.Title>
             <Dialog.Description className="hidden">
               Navigate to different sections of the website
