@@ -58,7 +58,6 @@ const { image, alt, projectDescription, projectTitle, projectUrl } =
       }
 
       @media (width < 768px) {
-        padding: 0.25rem 0.25rem 0.25rem 0.5rem;
         h4 {
           font-size: 0.75rem;
         }
@@ -82,12 +81,16 @@ const { image, alt, projectDescription, projectTitle, projectUrl } =
         opacity: 1;
         transform: scale(1);
         max-height: 200px;
+
+        @media (width < 768px) {
+          padding: 0.25rem 0.25rem 0.25rem 0.5rem;
+        }
       }
     }
 
     @media (width < 768px) {
       max-width: 150px;
-      transform-origin: left;
+      transform-origin: var(--transform-origin);
     }
   }
 </style>

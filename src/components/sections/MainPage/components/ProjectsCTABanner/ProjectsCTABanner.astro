@@ -132,13 +132,13 @@ const projectsData = content.projects
         color: var(--color-text-primary);
         font-weight: 300;
         font-style: italic;
-        z-index: 10;
+        z-index: 1;
         font-size: 1.5rem;
         text-wrap: nowrap;
 
         @media (width < 768px) {
           top: 1.25rem;
-          font-size: 1rem;
+          font-size: 1.25rem;
         }
       }
 
@@ -146,20 +146,26 @@ const projectsData = content.projects
         position: relative;
         display: flex;
         width: 100%;
-        max-width: 1400px;
+        max-width: var(--content-max-width);
         margin: 0 auto;
         justify-content: space-around;
         align-items: center;
-        z-index: 100;
-        padding: 1rem 6rem;
+        z-index: 2;
+        padding: 1rem var(--content-padding-screen-l);
         pointer-events: none;
 
         @media (width < 1000px) {
-          padding: 1rem 4rem;
+          padding: 1rem var(--content-padding-screen-m);
         }
 
         @media (width < 768px) {
           padding: 1rem;
+        }
+
+        @media (width < 500px) {
+          flex-direction: column;
+          justify-content: center;
+          gap: 1rem;
         }
       }
 
@@ -179,10 +185,14 @@ const projectsData = content.projects
           margin: 0 auto;
         }
 
-        @media (width < 850px) {
-          li:last-child {
+        @media (width < 550px) {
+          li:nth-child(2) {
             display: none;
           }
+        }
+        @media (width < 500px) {
+          flex-direction: column;
+          justify-content: center;
         }
       }
 
@@ -209,6 +219,10 @@ const projectsData = content.projects
 
         .icon {
           filter: var(--filter-bg-base);
+          @media (width < 768px) {
+            width: var(--text-sm);
+            height: auto;
+          }
         }
 
         &:hover {
@@ -222,6 +236,10 @@ const projectsData = content.projects
           padding: 0.5rem 0.75rem;
 
           font-size: var(--text-sm);
+        }
+
+        @media (width < 500px) {
+          padding: 0.25rem;
         }
       }
 
