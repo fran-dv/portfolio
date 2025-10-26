@@ -1,0 +1,128 @@
+---
+import type { SvgComponent } from "astro/types";
+interface Props {
+  direction: "left" | "right";
+  speed: number;
+  imagesSVGs: (SvgComponent & ImageMetadata)[];
+}
+
+const { direction, speed, imagesSVGs } = Astro.props;
+
+const spaceBetweenLogos = (100 - 5 * imagesSVGs.length) / imagesSVGs.length;
+const translateX = direction === "left" ? "-100%" : "100%";
+---
+
+<div class:list={["wrapper", { right: direction === "right" }]}>
+  <div class="content">
+    {
+      imagesSVGs.map((LogoSVG) => (
+        <div class="item">
+          <LogoSVG class="logoSVG" />
+        </div>
+      ))
+    }
+  </div>
+  <div class="content">
+    {
+      imagesSVGs.map((LogoSVG) => (
+        <div class="item">
+          <LogoSVG class="logoSVG" />
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<style define:vars={{ spaceBetweenLogos, translateX, speed: `${speed}s` }}>
+  .wrapper {
+    width: 100%;
+    position: relative;
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      .content {
+        animation-play-state: paused;
+      }
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      top: 0;
+      left: 0;
+      z-index: 2;
+
+      background: #050606;
+      background: linear-gradient(
+        90deg,
+        rgba(5, 6, 6, 0) 93%,
+        rgba(5, 6, 6, 0.87) 98%,
+        rgba(5, 6, 6, 1) 100%
+      );
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      top: 0;
+      left: 0;
+      z-index: 2;
+
+      background: #050606;
+      background: linear-gradient(
+        -90deg,
+        rgba(5, 6, 6, 0) 93%,
+        rgba(5, 6, 6, 0.87) 98%,
+        rgba(5, 6, 6, 1) 100%
+      );
+    }
+  }
+
+  .right {
+    flex-direction: row-reverse;
+  }
+
+  .content {
+    --spacing: calc(var(--spaceBetweenLogos) * 1%);
+    min-width: 100%;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    gap: var(--spacing);
+    padding-right: calc(var(--spacing) / 2);
+    padding-left: calc(var(--spacing) / 2);
+
+    will-change: transform;
+    animation-duration: var(--speed);
+    animation-iteration-count: infinite;
+    animation-name: marquee;
+    animation-timing-function: linear;
+  }
+
+  .item {
+    width: 4.5rem;
+    height: auto;
+
+    .logoSVG {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(var(--translateX));
+    }
+  }
+</style>
