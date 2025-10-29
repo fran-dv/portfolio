@@ -2,5 +2,8 @@
   "title": "About",
   "paragraph1": "I'm a web developer with a focus on the front-end. I build solutions for businesses and am passionate about open-source software. I'm a {bitcoinCashLink} advocate, and I design and ship projects that align with my ethics.",
   "bitcoinCashLink": "Bitcoin Cash",
-  "paragraph2": "I domain mainly React and TypeScript, but I'm not married with any stack: I always try to find the most optimal tools for each concrete project. Below are the technologies I work with often."
+  "paragraph2": "I mainly work React and TypeScript, but I'm not married to any stack: I always try to find the most suitable tools for each specific project. Below are some of the technologies I work with often.",
+  "callToAction": "You can check out my {cvLink} or {contactLink}.",
+  "cvLink": "CV",
+  "contactLink": "get in touch with me"
 }

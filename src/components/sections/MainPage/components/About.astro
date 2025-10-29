@@ -24,7 +24,17 @@ interface Props {
 const { contentEntry }: Props = Astro.props;
 const content = contentEntry.data;
 
+const locale = Astro.currentLocale;
+
 const paragraph1Parts = content.paragraph1.split("{bitcoinCashLink}");
+const callToActionFirstPart = content.callToAction.split("{cvLink}")[0];
+const callToActionSecondPart = content.callToAction.split("{cvLink}")[1];
+console.log("ctafirstParts: ", callToActionFirstPart);
+const callToActionParts = [
+  callToActionFirstPart,
+  ...callToActionSecondPart.split("{contactLink}"),
+];
+console.log("callToActionParts: ", callToActionParts);
 
 const technologiesLogos1 = [
   ReactLogo,
@@ -50,7 +60,7 @@ const technologiesLogos2 = [
 
 <section id="about" class="wrapper">
   <div class="container">
-    <h1>{content.title}</h1>
+    <h1 class="section-title">{content.title}</h1>
 
     <div class="contentContainer">
       <p class:list={["paragraph", "one"]}>
@@ -76,6 +86,19 @@ const technologiesLogos2 = [
           imagesSVGs={technologiesLogos2}
         />
       </div>
+
+      <p class:list={["paragraph"]}>
+        {callToActionParts[0]}
+        <a
+          class="link"
+          href={`/cv/cv_${locale}.pdf`}
+          download={`Francisco_Della_Vedova_${locale}.pdf`}
+          target="_blank">{content.cvLink}</a
+        >
+        {callToActionParts[1]}
+        <a class="link" href="#contact" target="_blank">{content.contactLink}</a
+        >
+      </p>
     </div>
   </div>
 </section>
@@ -84,7 +107,6 @@ const technologiesLogos2 = [
   .wrapper {
     position: relative;
     width: 100%;
-    min-height: 50vh;
     display: flex;
     background-color: var(--color-bg-base);
     padding: 1.5rem 0;
@@ -100,18 +122,6 @@ const technologiesLogos2 = [
 
     @media (width < 768px) {
       padding: 0 var(--content-padding-screen-m);
-    }
-  }
-
-  h1 {
-    color: var(--color-text-primary);
-    font-family: var(--font-title);
-    font-size: 3rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-
-    @media (width < 768px) {
-      font-size: 2rem;
     }
   }
 
@@ -144,7 +154,7 @@ const technologiesLogos2 = [
     display: flex;
     flex-direction: column;
     gap: 1rem;
-    margin-top: 2rem;
+    margin: 2rem 0;
 
     @media (width < 768px) {
       margin-top: 0;
