@@ -1,0 +1,39 @@
+---
+interface Props {
+  sectionId: string;
+  sectionTitle: string;
+  className?: string;
+}
+
+const { sectionId, className, sectionTitle }: Props = Astro.props;
+---
+
+<section id={sectionId} class="wrapper">
+  <div class:list={["container", className]}>
+    <h1 class="section-title">{sectionTitle}</h1>
+    <slot />
+  </div>
+</section>
+
+<style>
+  .wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    background-color: var(--color-bg-base);
+    padding: 1.5rem 0;
+  }
+
+  .container {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: var(--content-max-width);
+    padding: 0 var(--content-padding-screen-l);
+
+    @media (width < 768px) {
+      padding: 0 var(--content-padding-screen-m);
+    }
+  }
+</style>
