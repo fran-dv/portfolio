@@ -1,0 +1,67 @@
+---
+import type { FooterContent } from "@content/footer/schema";
+import { TextPressure } from "./components/TextPressure/";
+import { getEntry } from "astro:content";
+
+const locale = Astro.currentLocale;
+if (!locale) throw new Error("Locale not found");
+
+const entry = await getEntry("footer", locale);
+if (!entry) {
+  throw new Error(`No entry found for locale: ${locale}`);
+}
+const content: FooterContent = entry.data;
+---
+
+<footer class="wrapper">
+  <div class="container">
+    <TextPressure client:visible className="textPressure" text="Fran DV" flex />
+
+    <ul class="links">
+      {
+        content.links.map((link) => (
+          <li>
+            <a class="link" href={link.url} target="_blank">
+              {link.name}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .wrapper {
+    display: flex;
+    background-color: var(--color-bg-base);
+  }
+
+  .container {
+    margin: 0 auto;
+    max-width: var(--content-max-width);
+    padding: var(--content-padding-screen-l);
+    display: flex;
+    flex-direction: column;
+
+    @media (width < 768px) {
+      padding: var(--content-padding-screen-m);
+    }
+  }
+
+  .textPressure {
+    width: 100%;
+  }
+
+  .links {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+    padding: 0 1rem;
+  }
+
+  .link {
+    color: var(--color-text-primary);
+    font-size: var(--text-base);
+  }
+</style>
