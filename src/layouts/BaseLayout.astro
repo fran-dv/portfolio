@@ -1,6 +1,7 @@
 ---
 import Navbar from "@ui-components/astro/Navbar/Navbar.astro";
 import "@/styles/global.css";
+import Footer from "@sections/Footer/Footer.astro";
 
 interface Props {
   locale: "en" | "es";
@@ -28,6 +29,7 @@ const {
   <body>
     <Navbar locale={locale} />
     <slot />
+    <Footer />
   </body>
 </html>
 
