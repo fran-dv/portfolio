@@ -1,0 +1,20 @@
+{
+  "links": [
+    {
+      "name": "Email",
+      "url": "mailto:franciscodv@gmail.com"
+    },
+    {
+      "name": "Linkedin",
+      "url": "https://www.linkedin.com/in/francisco-della-vedova-702154316/"
+    },
+    {
+      "name": "Github",
+      "url": "https://github.com/fran-dv"
+    },
+    {
+      "name": "See source code",
+      "url": "https://github.com/fran-dv/portfolio"
+    }
+  ]
+}

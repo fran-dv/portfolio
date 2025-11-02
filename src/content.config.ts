@@ -35,4 +35,25 @@ const projectsCTABanner = defineCollection({
   }),
 });
 
-export const collections = { hero, navbar, about, projectsCTABanner };
+const contact = defineCollection({
+  loader: glob({
+    pattern: "*.json",
+    base: "src/content/contact",
+  }),
+});
+
+const footer = defineCollection({
+  loader: glob({
+    pattern: "*.json",
+    base: "src/content/footer",
+  }),
+});
+
+export const collections = {
+  hero,
+  navbar,
+  about,
+  projectsCTABanner,
+  contact,
+  footer,
+};
