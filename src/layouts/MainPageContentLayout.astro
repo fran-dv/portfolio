@@ -3,9 +3,11 @@ interface Props {
   sectionId: string;
   sectionTitle: string;
   className?: string;
+  scrollMarginTop?: string;
 }
 
-const { sectionId, className, sectionTitle }: Props = Astro.props;
+const { sectionId, className, sectionTitle, scrollMarginTop }: Props =
+  Astro.props;
 ---
 
 <section id={sectionId} class="wrapper">
@@ -15,13 +17,13 @@ const { sectionId, className, sectionTitle }: Props = Astro.props;
   </div>
 </section>
 
-<style>
+<style define:vars={{ scrollMarginTop }}>
   .wrapper {
     position: relative;
     width: 100%;
     display: flex;
-    background-color: var(--color-bg-base);
     padding: 1.5rem 0;
+    scroll-margin-top: var(--scrollMarginTop);
   }
 
   .container {
