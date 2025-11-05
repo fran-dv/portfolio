@@ -13,18 +13,40 @@ export const MainPageAnchors = {
   Contact: "#contact",
 } as const;
 
-export const getRelativeUrl = (
-  locale: Locale,
-  page: keyof typeof Paths,
-  anchor: keyof typeof MainPageAnchors | undefined = undefined,
-) => {
+interface GetRelativeUrlOpts {
+  locale: Locale;
+  page: keyof typeof Paths;
+  anchor?: keyof typeof MainPageAnchors;
+  dynamicParam?: string;
+}
+
+export const getRelativeUrl = ({
+  locale,
+  page,
+  anchor,
+  dynamicParam,
+}: GetRelativeUrlOpts) => {
   const path = Paths[page];
+
   if (anchor) {
     const urlAnchor = MainPageAnchors[anchor];
     const url = getRelativeLocaleUrl(locale, path);
-    const urlWithAnchor = url + urlAnchor;
+    const urlWithAnchor = `${url}${urlAnchor}`;
     return urlWithAnchor;
   }
+
+  if (dynamicParam) {
+    const url = getRelativeLocaleUrl(locale, path);
+    const urlWithDynamicParam = `${url}${dynamicParam}`;
+    return urlWithDynamicParam;
+  }
+
   const url = getRelativeLocaleUrl(locale, path);
   return url;
 };
+
+export const ProjectsStaticPaths = [
+  { params: { project: "bch-connect" } },
+  { params: { project: "zorro-viejo-ecommerce" } },
+  { params: { project: "mini-dapp" } },
+];
