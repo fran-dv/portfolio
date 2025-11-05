@@ -3,19 +3,14 @@
   "ctaButton": "See projects",
   "projects": [
     {
-      "id": "1",
+      "id": "bch-connect",
       "title": "BCH Connect",
       "description": "React library to seamlessly connect BCH wallets"
     },
     {
-      "id": "2",
+      "id": "zorro-viejo-ecommerce",
       "title": "Zorro viejo",
       "description": "Beverages distributor mobile-first e-commerce"
-    },
-    {
-      "id": 3,
-      "title": "Mini dApp",
-      "description": "Ethereum dApp built for a technical challenge"
     }
   ]
 }
