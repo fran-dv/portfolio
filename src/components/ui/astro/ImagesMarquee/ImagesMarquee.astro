@@ -1,32 +1,39 @@
 ---
 import type { SvgComponent } from "astro/types";
+import { Image } from "astro:assets";
+
+export interface TechnologieLogo {
+  name: string;
+  svg: (SvgComponent & ImageMetadata) | ImageMetadata;
+}
+
 interface Props {
   direction: "left" | "right";
   speed: number;
-  imagesSVGs: (SvgComponent & ImageMetadata)[];
+  images: TechnologieLogo[];
 }
 
-const { direction, speed, imagesSVGs } = Astro.props;
+const { direction, speed, images } = Astro.props;
 
-const spaceBetweenLogos = (100 - 5 * imagesSVGs.length) / imagesSVGs.length;
+const spaceBetweenLogos = (100 - 5 * images.length) / images.length;
 const translateX = direction === "left" ? "-100%" : "100%";
 ---
 
 <div class:list={["wrapper", { right: direction === "right" }]}>
   <div class="content">
     {
-      imagesSVGs.map((LogoSVG) => (
-        <div class="item">
-          <LogoSVG class="logoSVG" />
+      images.map((i) => (
+        <div class="item" title={i.name}>
+          <Image src={i.svg} alt={i.name} loading="lazy" class="logo" />
         </div>
       ))
     }
   </div>
   <div class="content">
     {
-      imagesSVGs.map((LogoSVG) => (
-        <div class="item">
-          <LogoSVG class="logoSVG" />
+      images.map((i) => (
+        <div class="item" title={i.name}>
+          <Image src={i.svg} alt={i.name} loading="lazy" class="logo" />
         </div>
       ))
     }
@@ -108,10 +115,10 @@ const translateX = direction === "left" ? "-100%" : "100%";
   }
 
   .item {
-    width: 4.5rem;
+    width: 4rem;
     height: auto;
 
-    .logoSVG {
+    .logo {
       width: 100%;
       height: auto;
     }
