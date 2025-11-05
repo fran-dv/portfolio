@@ -1,6 +1,8 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import type { TechnologieLogo } from "@ui-components/astro/ImagesMarquee/ImagesMarquee.astro";
 import ImagesMarquee from "@ui-components/astro/ImagesMarquee/ImagesMarquee.astro";
+import MainPageContentLayout from "@/layouts/MainPageContentLayout.astro";
 import AstroLogo from "@assets/technologiesLogos/astro.svg";
 import ReactLogo from "@assets/technologiesLogos/react.svg";
 import TsLogo from "@assets/technologiesLogos/typescript.svg";
@@ -16,6 +18,7 @@ import TestingLibraryLogo from "@assets/technologiesLogos/testing-library.svg";
 import ZodLogo from "@assets/technologiesLogos/zod.svg";
 import ZustandLogo from "@assets/technologiesLogos/zustand.svg";
 import VitestLogo from "@assets/technologiesLogos/vitest.svg";
+import TanStackLogo from "@assets/technologiesLogos/tanstack.png";
 
 interface Props {
   contentEntry: CollectionEntry<"about">;
@@ -29,125 +32,100 @@ const locale = Astro.currentLocale;
 const paragraph1Parts = content.paragraph1.split("{bitcoinCashLink}");
 const callToActionFirstPart = content.callToAction.split("{cvLink}")[0];
 const callToActionSecondPart = content.callToAction.split("{cvLink}")[1];
-console.log("ctafirstParts: ", callToActionFirstPart);
 const callToActionParts = [
   callToActionFirstPart,
   ...callToActionSecondPart.split("{contactLink}"),
 ];
-console.log("callToActionParts: ", callToActionParts);
 
-const technologiesLogos1 = [
-  ReactLogo,
-  TsLogo,
-  JsLogo,
-  AstroLogo,
-  CSSLogo,
-  HTMLLogo,
-  GitLogo,
-  TailwindLogo,
+// Amount of logos should be odd for spacing consistency
+const technologiesLogos1: TechnologieLogo[] = [
+  { name: "React", svg: ReactLogo },
+  { name: "TypeScript", svg: TsLogo },
+  { name: "JavaScript", svg: JsLogo },
+  { name: "Astro", svg: AstroLogo },
+  { name: "CSS", svg: CSSLogo },
+  { name: "HTML", svg: HTMLLogo },
+  { name: "Git", svg: GitLogo },
+  { name: "Tailwind", svg: TailwindLogo },
 ];
 
-const technologiesLogos2 = [
-  LinuxLogo,
-  ZodLogo,
-  PostgreSQLLogo,
-  TestingLibraryLogo,
-  ZustandLogo,
-  VitestLogo,
-  SupabaseLogo,
+const technologiesLogos2: TechnologieLogo[] = [
+  { name: "Linux", svg: LinuxLogo },
+  { name: "Zod", svg: ZodLogo },
+  { name: "PostgreSQL", svg: PostgreSQLLogo },
+  { name: "Testing Library", svg: TestingLibraryLogo },
+  { name: "Zustand", svg: ZustandLogo },
+  { name: "Vitest", svg: VitestLogo },
+  { name: "Supabase", svg: SupabaseLogo },
+  { name: "TanStack", svg: TanStackLogo },
 ];
+
+console.log("tech logos 1 length: ", technologiesLogos1.length);
+console.log("tech logos 2 length: ", technologiesLogos2.length);
+
+const allLogos: TechnologieLogo[] = [
+  ...technologiesLogos1,
+  ...technologiesLogos2,
+  ...technologiesLogos1.slice(0, 2), // repeat two logos for spacing consistency
+];
+
+const chunkSize = Math.ceil(allLogos.length / 3);
+
+const logosMobile1: TechnologieLogo[] = allLogos.slice(0, chunkSize);
+const logosMobile2: TechnologieLogo[] = allLogos.slice(
+  chunkSize,
+  chunkSize * 2,
+);
+const logosMobile3: TechnologieLogo[] = allLogos.slice(chunkSize * 2);
 ---
 
-<section id="about" class="wrapper">
-  <div class="container">
-    <h1 class="section-title">{content.title}</h1>
+<MainPageContentLayout
+  sectionId="about"
+  sectionTitle={content.title}
+  scrollMarginTop="10vh"
+>
+  <div class="contentContainer">
+    <p class:list={["paragraph", "one"]}>
+      {paragraph1Parts[0]}
+      <a class="link bch" href="https://whatisbitcoin.cash" target="_blank"
+        >{content.bitcoinCashLink}</a
+      >
+      {paragraph1Parts[1]}
+    </p>
+    <p class="paragraph">
+      {content.paragraph2}
+    </p>
 
-    <div class="contentContainer">
-      <p class:list={["paragraph", "one"]}>
-        {paragraph1Parts[0]}
-        <a class="link bch" href="https://whatisbitcoin.cash" target="_blank"
-          >{content.bitcoinCashLink}</a
-        >
-        {paragraph1Parts[1]}
-      </p>
-      <p class:list={["paragraph", "two"]}>
-        {content.paragraph2}
-      </p>
-
-      <div class="marqueesContainer">
-        <ImagesMarquee
-          direction="left"
-          speed={25}
-          imagesSVGs={technologiesLogos1}
-        />
-        <ImagesMarquee
-          direction="right"
-          speed={25}
-          imagesSVGs={technologiesLogos2}
-        />
-      </div>
-
-      <p class:list={["paragraph"]}>
-        {callToActionParts[0]}
-        <a
-          class="link"
-          href={`/cv/cv_${locale}.pdf`}
-          download={`Francisco_Della_Vedova_${locale}.pdf`}
-          target="_blank">{content.cvLink}</a
-        >
-        {callToActionParts[1]}
-        <a class="link" href="#contact" target="_blank">{content.contactLink}</a
-        >
-      </p>
+    <div class:list={["marqueesContainer", "desktop"]}>
+      <ImagesMarquee direction="left" speed={25} images={technologiesLogos1} />
+      <ImagesMarquee direction="right" speed={25} images={technologiesLogos2} />
     </div>
+
+    <div class:list={["marqueesContainer", "mobile"]}>
+      <ImagesMarquee direction="left" speed={25} images={logosMobile1} />
+      <ImagesMarquee direction="right" speed={25} images={logosMobile2} />
+      <ImagesMarquee direction="left" speed={25} images={logosMobile3} />
+    </div>
+
+    <p class="paragraph">
+      {callToActionParts[0]}
+      <a
+        class="link"
+        href={`/cv/cv_${locale}.pdf`}
+        download={`Francisco_Della_Vedova_${locale}.pdf`}
+        target="_blank">{content.cvLink}</a
+      >
+      {callToActionParts[1]}
+      <a class="link" href="#contact" target="_blank">{content.contactLink}</a>
+    </p>
   </div>
-</section>
+</MainPageContentLayout>
 
 <style>
-  .wrapper {
-    position: relative;
-    width: 100%;
-    display: flex;
-    background-color: var(--color-bg-base);
-    padding: 1.5rem 0;
-  }
-
-  .container {
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    max-width: var(--content-max-width);
-    padding: 0 var(--content-padding-screen-l);
-
-    @media (width < 768px) {
-      padding: 0 var(--content-padding-screen-m);
-    }
-  }
-
-  .contentContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .paragraph {
-    color: var(--color-text-primary);
-    font-size: 1.5rem;
-    font-weight: 500;
-
-    @media (width < 768px) {
-      font-size: 1rem;
-    }
-  }
-
   .paragraph.one {
     .bch::before {
       background-color: #0ac18e;
     }
-  }
-
-  .paragraph.two {
   }
 
   .marqueesContainer {
@@ -155,9 +133,20 @@ const technologiesLogos2 = [
     flex-direction: column;
     gap: 1rem;
     margin: 2rem 0;
+  }
 
+  .marqueesContainer.desktop {
     @media (width < 768px) {
-      margin-top: 0;
+      display: none;
+      animation: none;
+    }
+  }
+
+  .marqueesContainer.mobile {
+    margin: 0;
+    @media (width > 767px) {
+      display: none;
+      animation: none;
     }
   }
 </style>
