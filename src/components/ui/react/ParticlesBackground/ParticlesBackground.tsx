@@ -229,9 +229,6 @@ export const ParticlesBackground: React.FC<ParticlesProps> = ({
     };
 
     animationFrameId = requestAnimationFrame(update);
-    console.log("isMobile", isMobile);
-    console.log("particleCount", particleCount);
-    console.log("count", count);
 
     return () => {
       window.removeEventListener("resize", resize);
