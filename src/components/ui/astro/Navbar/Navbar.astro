@@ -5,8 +5,7 @@ import { type Locale } from "@/i18n/locales";
 import type { NavbarContent } from "@content/navbar/schema";
 import { FileTextIcon } from "@radix-ui/react-icons";
 import { MobileNavMenu } from "./components/MobileNavMenu/MobileNavMenu";
-import { getRelativeLocaleUrl } from "astro:i18n";
-import { MainPageAnchors } from "@/routing/paths";
+import { getRelativeUrl, MainPageAnchors } from "@/routing/paths";
 
 interface Props {
   locale: Locale;
@@ -30,22 +29,22 @@ const navLinks: NavLink[] = [
   {
     label: content.homeLink,
     ariaLabel: "Home section link",
-    link: getRelativeLocaleUrl(locale, MainPageAnchors.Hero),
+    link: getRelativeUrl({ locale, page: "MainPage", anchor: "Hero" }),
   },
   {
     label: content.projectsLink,
     ariaLabel: "Projects section link",
-    link: getRelativeLocaleUrl(locale, MainPageAnchors.Projects),
+    link: getRelativeUrl({ locale, page: "Projects" }),
   },
   {
     label: content.aboutLink,
     ariaLabel: "About page link",
-    link: getRelativeLocaleUrl(locale, MainPageAnchors.About),
+    link: getRelativeUrl({ locale, page: "MainPage", anchor: "About" }),
   },
   {
     label: content.contactLink,
     ariaLabel: "Contact page link",
-    link: getRelativeLocaleUrl(locale, MainPageAnchors.Contact),
+    link: getRelativeUrl({ locale, page: "MainPage", anchor: "Contact" }),
   },
 ];
 ---
