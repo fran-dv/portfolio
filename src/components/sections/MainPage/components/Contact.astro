@@ -1,0 +1,110 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
+import MainPageContentLayout from "@/layouts/MainPageContentLayout.astro";
+import type { SvgComponent } from "astro/types";
+import LinkedingLogo from "@assets/socialMediaLogos/linkedin.svg";
+import GitHubLogo from "@assets/socialMediaLogos/github.svg";
+import WhatsAppLogo from "@assets/socialMediaLogos/whatsapp.svg";
+import { CopyButton } from "@ui-components/react/CopyButton";
+import type { Locale } from "@/i18n/locales";
+
+interface Props {
+  contentEntry: CollectionEntry<"contact">;
+}
+
+const currentLocale = Astro.currentLocale;
+const { contentEntry }: Props = Astro.props;
+const content = contentEntry.data;
+
+interface contactLink {
+  name: string;
+  href: string;
+  svg: SvgComponent & ImageMetadata;
+}
+
+const contactLinks: contactLink[] = [
+  {
+    name: "WhatsApp",
+    href: "https://wa.me/5492241461613",
+    svg: WhatsAppLogo,
+  },
+  {
+    name: "Linkedin",
+    href: "https://www.linkedin.com/in/francisco-della-vedova-702154316/",
+    svg: LinkedingLogo,
+  },
+  {
+    name: "GitHub",
+    href: "https://github.com/fran-dv/",
+    svg: GitHubLogo,
+  },
+];
+
+const paragraph2Parts = content.paragraph2.split("{e-mail}");
+const email: string = "franciscodellav@gmail.com";
+---
+
+<MainPageContentLayout sectionId="contact" sectionTitle={content.title}>
+  <div class="contentContainer">
+    <p class="paragraph">{content.paragraph1}</p>
+    <p class="paragraph">
+      {paragraph2Parts[0]}<a href=`mailto:${email}` class="link">{email}</a>
+      <CopyButton
+        client:visible
+        text={email}
+        locale={currentLocale as Locale}
+      />
+    </p>
+    <ul class="contactLinks">
+      {
+        contactLinks.map((l) => (
+          <li class="linkItem">
+            <a class="contactLink" href={l.href} target="_blank">
+              <Image src={l.svg} alt={`${l.name} logo`} class="svg" />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</MainPageContentLayout>
+
+<style>
+  .contactLinks {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding-top: 1rem;
+  }
+
+  .linkItem {
+    aspect-ratio: 1;
+    width: 3rem;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .contactLink {
+      width: 100%;
+      height: auto;
+      object-fit: 1;
+
+      svg {
+        max-width: 3rem;
+        width: 100%;
+        height: auto;
+
+        @media (width < 768px) {
+          max-width: 2rem;
+        }
+      }
+    }
+
+    @media (width < 768px) {
+      width: 2rem;
+    }
+  }
+</style>
