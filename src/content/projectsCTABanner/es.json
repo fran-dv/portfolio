@@ -1,16 +1,4 @@
 {
   "title": "Lo que he estado construyendo...",
-  "ctaButton": "Ver proyectos",
-  "projects": [
-    {
-      "id": "bch-connect",
-      "title": "BCH Connect",
-      "description": "Librería de React para conexión de wallets de Bitcoin Cash"
-    },
-    {
-      "id": "zorro-viejo-ecommerce",
-      "title": "Zorro viejo",
-      "description": "E-commerce mobile-first para distribuidora de bebidas"
-    }
-  ]
+  "ctaButton": "Ver proyectos"
 }

@@ -1,16 +1,4 @@
 {
   "title": "See what I've been building...",
-  "ctaButton": "See projects",
-  "projects": [
-    {
-      "id": "bch-connect",
-      "title": "BCH Connect",
-      "description": "React library to seamlessly connect BCH wallets"
-    },
-    {
-      "id": "zorro-viejo-ecommerce",
-      "title": "Zorro viejo",
-      "description": "Beverages distributor mobile-first e-commerce"
-    }
-  ]
+  "ctaButton": "See projects"
 }

@@ -13,11 +13,13 @@ const { locale }: Props = Astro.props;
 const heroContent = await getEntry("hero", locale);
 const aboutContent = await getEntry("about", locale);
 const projectsCTABannerContent = await getEntry("projectsCTABanner", locale);
+const projectsContent = await getEntry("projects", locale);
 const contactContent = await getEntry("contact", locale);
 if (
   !heroContent ||
   !aboutContent ||
   !projectsCTABannerContent ||
+  !projectsContent ||
   !contactContent
 ) {
   throw new Error(
@@ -28,7 +30,10 @@ if (
 
 <main>
   <Hero contentEntry={heroContent} />
-  <ProjectsCTABanner contentEntry={projectsCTABannerContent} />
+  <ProjectsCTABanner
+    contentEntry={projectsCTABannerContent}
+    projectsEntry={projectsContent}
+  />
   <About contentEntry={aboutContent} />
   <Contact contentEntry={contactContent} />
 </main>
