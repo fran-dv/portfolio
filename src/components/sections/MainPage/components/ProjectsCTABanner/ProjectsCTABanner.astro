@@ -2,27 +2,30 @@
 import { ParticlesBackground } from "@ui-components/react/ParticlesBackground";
 import type { CollectionEntry } from "astro:content";
 import type { ProjectsCTABannerContent } from "@content/projectsCTABanner/schema";
-import project1Preview from "@assets/projects/previews/project-1-preview.png";
-import project2Preview from "@assets/projects/previews/project-2-preview.png";
-import project3Preview from "@assets/projects/previews/project-3-preview.png";
+import project1Preview from "@assets/projects/previews/bch-connect.1.png";
+import project2Preview from "@assets/projects/previews/zorro-viejo-desktop.1.png";
+import project3Preview from "@assets/projects/previews/mini-dapp.1.png";
 import ProjectPreviewCard from "./components/ProjectPreviewCard.astro";
-import Icon from "@ui-components/astro/Icon/Icon.astro";
 import { getRelativeUrl } from "@/routing/paths";
 import type { Locale } from "@/i18n/locales";
+import type { ProjectsContent } from "@content/projects/schema";
+import CTAButton from "@ui-components/astro/CTAButton/CTAButton.astro";
 
 interface Props {
   contentEntry: CollectionEntry<"projectsCTABanner">;
+  projectsEntry: CollectionEntry<"projects">;
 }
 
-const { contentEntry } = Astro.props;
+const { contentEntry, projectsEntry } = Astro.props;
 const locale = Astro.currentLocale as Locale;
 const content: ProjectsCTABannerContent = contentEntry.data;
+const projectsContent: ProjectsContent = projectsEntry.data;
 
 const previews = [project1Preview, project2Preview, project3Preview];
-const projectsData = content.projects
+const projectsData = projectsContent.projects
   .map((p, idx) => ({
     title: p.title,
-    description: p.description,
+    description: p.shortDescription,
     url: getRelativeUrl({ locale, page: "Projects", dynamicParam: p.id }),
     image: previews[idx],
   }))
@@ -58,9 +61,7 @@ const projectsLink = getRelativeUrl({ locale, page: "Projects" });
         })
       }
     </ul>
-    <a class="ctaButton" href={projectsLink}>
-      {content.ctaButton}<Icon name="arrowRight" class="ctaIcon" />
-    </a>
+    <CTAButton href={projectsLink} label={content.ctaButton} />
 
     <style>
       .container {
@@ -206,63 +207,6 @@ const projectsLink = getRelativeUrl({ locale, page: "Projects" });
         @media (width < 500px) {
           flex-direction: column;
           justify-content: center;
-        }
-      }
-
-      .ctaButton {
-        width: 100%;
-        max-width: 200px;
-        pointer-events: auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 0.25rem;
-        padding: 0.75rem 1rem;
-        color: var(--color-bg-base);
-        background-color: var(--color-text-contrast);
-        font-size: var(--text-lg);
-        border-radius: 1rem;
-        font-weight: 600;
-        transition: transform 0.2s ease-in-out;
-        margin-left: 0;
-
-        overflow: hidden;
-        box-shadow: 0 0 16px rgba(255, 255, 255, 0.4);
-        animation: pulseLight 3s ease-in-out infinite;
-
-        .icon {
-          filter: var(--filter-bg-base);
-          @media (width < 768px) {
-            width: var(--text-sm);
-            height: auto;
-          }
-        }
-
-        &:hover {
-          transform: scale(1.03);
-          background-color: var(--color-text-primary);
-          box-shadow: 0 0 20px rgba(255, 255, 255, 0.45);
-        }
-
-        @media (width < 768px) {
-          max-width: 150px;
-          padding: 0.5rem 0.75rem;
-
-          font-size: var(--text-sm);
-        }
-
-        @media (width < 500px) {
-          padding: 0.25rem;
-        }
-      }
-
-      @keyframes pulseLight {
-        0%,
-        100% {
-          box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
-        }
-        50% {
-          box-shadow: 0 0 18px rgba(255, 255, 255, 0.45);
         }
       }
     </style>
