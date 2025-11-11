@@ -63,5 +63,9 @@ const content: FooterContent = entry.data;
   .link {
     color: var(--color-text-primary);
     font-size: var(--text-base);
+
+    @media (width < 768px) {
+      font-size: var(--text-xs);
+    }
   }
 </style>
