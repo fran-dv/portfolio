@@ -19,6 +19,8 @@ import ZodLogo from "@assets/technologiesLogos/zod.svg";
 import ZustandLogo from "@assets/technologiesLogos/zustand.svg";
 import VitestLogo from "@assets/technologiesLogos/vitest.svg";
 import TanStackLogo from "@assets/technologiesLogos/tanstack.png";
+import { getRelativeUrl } from "@/routing/paths";
+import type { Locale } from "@/i18n/locales";
 
 interface Props {
   contentEntry: CollectionEntry<"about">;
@@ -28,6 +30,9 @@ const { contentEntry }: Props = Astro.props;
 const content = contentEntry.data;
 
 const locale = Astro.currentLocale;
+if (!locale) {
+  throw new Error("Current locale not found");
+}
 
 const paragraph1Parts = content.paragraph1.split("{bitcoinCashLink}");
 const callToActionFirstPart = content.callToAction.split("{cvLink}")[0];
@@ -36,6 +41,7 @@ const callToActionParts = [
   callToActionFirstPart,
   ...callToActionSecondPart.split("{contactLink}"),
 ];
+const paragraph3Parts = content.paragraph3.split("{bchConnectLink}");
 
 // Amount of logos should be odd for spacing consistency
 const technologiesLogos1: TechnologieLogo[] = [
@@ -59,9 +65,6 @@ const technologiesLogos2: TechnologieLogo[] = [
   { name: "Supabase", svg: SupabaseLogo },
   { name: "TanStack", svg: TanStackLogo },
 ];
-
-console.log("tech logos 1 length: ", technologiesLogos1.length);
-console.log("tech logos 2 length: ", technologiesLogos2.length);
 
 const allLogos: TechnologieLogo[] = [
   ...technologiesLogos1,
@@ -107,6 +110,19 @@ const logosMobile3: TechnologieLogo[] = allLogos.slice(chunkSize * 2);
       <ImagesMarquee direction="left" speed={25} images={logosMobile3} />
     </div>
 
+    <p class="paragraph">
+      {paragraph3Parts[0]}
+      <a
+        class="link"
+        href={getRelativeUrl({
+          page: "Projects",
+          locale: locale as Locale,
+          dynamicParam: "bch-connect",
+        })}
+        target="_blank">{content.bchConnectLink}</a
+      >
+      {paragraph3Parts[1]}
+    </p>
     <p class="paragraph">
       {callToActionParts[0]}
       <a
