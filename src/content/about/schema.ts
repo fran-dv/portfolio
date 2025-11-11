@@ -15,6 +15,10 @@ export const AboutContentSchema = z.object({
     ),
   cvLink: z.string(),
   contactLink: z.string(),
+  paragraph3: z
+    .string()
+    .refine((p3: string) => p3.includes("{bchConnectLink}")),
+  bchConnectLink: z.string(),
 });
 
 export type AboutContent = z.infer<typeof AboutContentSchema>;

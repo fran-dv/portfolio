@@ -2,7 +2,9 @@
   "title": "Sobre mi",
   "paragraph1": "Soy un desarrollador web con foco en el front-end. Creo soluciones para empresas y me apasiona el software open-source. Estoy obstinadamente comprometido con la idea del {bitcoinCashLink} y trabajo en proyectos que se alinean con mi ética.",
   "bitcoinCashLink": "efectivo electrónico P2P",
-  "paragraph2": "Domino principalmente React y TypeScript, pero no estoy casado con ningún stack: intento siempre buscar las herramientas más óptimas para cada proyecto concreto. A continuación, algunas de las tecnologías que utilizo.",
+  "paragraph2": "Domino principalmente React y TypeScript, pero no estoy casado con ningún stack: siempre intento buscar las herramientas más óptimas para cada proyecto. A continuación, algunas de las tecnologías que utilizo.",
+  "paragraph3": "Actualmente estoy desarrollando como side-project mi librería open-source {bchConnectLink}. Además, sigo formándome y ampliando mis habilidades, especialmente en back-end con Node.js y Express. También trabajo en otros side-projects (privados aún) cuando el tiempo me lo permite.",
+  "bchConnectLink": "BCH Connect",
   "callToAction": "Puedes ver mi {cvLink} o {contactLink}",
   "cvLink": "CV",
   "contactLink": "contactarme"

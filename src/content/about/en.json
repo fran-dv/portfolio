@@ -1,8 +1,10 @@
 {
   "title": "About",
-  "paragraph1": "I'm a web developer with a focus on the front-end. I build solutions for businesses and am passionate about open-source software. I'm a {bitcoinCashLink} advocate, and I design and ship projects that align with my ethics.",
-  "bitcoinCashLink": "Bitcoin Cash",
-  "paragraph2": "I mainly work React and TypeScript, but I'm not married to any stack: I always try to find the most suitable tools for each specific project. Below are some of the technologies I work with often.",
+  "paragraph1": "I'm a web developer focused on the front-end. I build solutions for businesses and am passionate about open-source software. I'm firmly committed to the idea of {bitcoinCashLink}, and I design and ship projects that align with my ethics.",
+  "bitcoinCashLink": "P2P electronic cash system",
+  "paragraph2": "I mainly work with React and TypeScript, but I'm not tied to any specific stack: I always look for the most effective tools for each specific project. Below are some of the technologies I use regularly.",
+  "paragraph3": "I'm currently developing my open-source library {bchConnectLink} as a side-project, while continuing to learn and expand my skills. Particularly, I'm learning back-end with Node.js and Express. I also work on several other side-projects (still private) whenever I can find the time.",
+  "bchConnectLink": "BCH Connect",
   "callToAction": "You can check out my {cvLink} or {contactLink}.",
   "cvLink": "CV",
   "contactLink": "get in touch with me"
