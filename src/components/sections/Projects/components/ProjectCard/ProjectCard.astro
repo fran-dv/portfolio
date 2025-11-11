@@ -1,0 +1,233 @@
+---
+import { AndroidMockDevice } from "@ui-components/react/AndroidMockDevice";
+import { BrowserMock } from "@ui-components/react/BrowserMock";
+import clsx from "clsx";
+import type { Project } from "@content/projects/projects";
+import CTAButton from "@ui-components/astro/CTAButton/CTAButton.astro";
+import type { ProjectsContent } from "@/content/projects/schema";
+import { getRelativeUrl } from "@/routing/paths";
+import type { Locale } from "@/i18n/locales";
+
+interface Props {
+  project: Project;
+  mockDevice: "mobile" | "desktop";
+  content: Omit<ProjectsContent, "projects">;
+}
+
+const { project, mockDevice, content } = Astro.props;
+
+const locale = Astro.currentLocale as Locale | undefined;
+if (!locale) {
+  throw new Error("Current locale not found");
+}
+---
+
+<div class="wrapper">
+  <div class:list={["container"]}>
+    <div class:list={["infoContainer", "glass", "glass-border"]}>
+      <h1>{project.title}</h1>
+      <p class="shortDescription">{project.shortDescription}</p>
+      <div class="actions">
+        <p>
+          <a
+            class:list={["link", "liveDemoLink"]}
+            href={project.liveDemoUrl}
+            target="_blank">Visit live site</a
+          >
+          <span> • </span>
+          <a
+            class:list={["link", "liveDemoLink"]}
+            href={project.repoUrl}
+            target="_blank">Visit repository</a
+          >
+        </p>
+        <CTAButton
+          href={getRelativeUrl({
+            locale,
+            page: "Projects",
+            dynamicParam: project.id,
+          })}
+          label={content.projectDetailsButton}
+          color="accent"
+          maxWidth="none"
+        />
+      </div>
+    </div>
+    <div class="previewContainer">
+      {
+        mockDevice === "mobile" ? (
+          <AndroidMockDevice
+            client:visible
+            src={project.images[0].src}
+            className={clsx(["mockDevice", "mobile"])}
+          />
+        ) : (
+          <BrowserMock
+            client:visible
+            imageSrc={project.images[0].src}
+            url={project.liveDemoUrl}
+            className={clsx(["mockDevice", "desktop"])}
+          />
+        )
+      }
+    </div>
+  </div>
+</div>
+
+<style>
+  .wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 100vw;
+
+    @media (width < 768px) {
+      margin-left: calc(((-1) * 50vw));
+    }
+  }
+
+  .container {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-radius: 1rem;
+
+    @media (width < 768px) {
+      flex-direction: column-reverse;
+      justify-content: flex-end;
+    }
+  }
+
+  .infoContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    padding: 1rem;
+    border-radius: 1rem;
+    pointer-events: auto;
+    width: 100%;
+    max-width: 500px;
+    flex: 1;
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 600;
+
+      @media (width < 1024px) {
+        font-size: 1.75rem;
+      }
+
+      @media (width < 768px) {
+        font-size: 1.25rem;
+      }
+    }
+
+    p {
+      color: var(--color-text-primary);
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    @media (width < 768px) {
+      padding: 0.75rem;
+    }
+  }
+
+  p.shortDescription {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+
+    @media (width < 1024px) {
+      font-size: var(--text-base);
+    }
+
+    @media (width < 768px) {
+      font-size: var(--text-sm);
+    }
+  }
+
+  .actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-top: 1rem;
+
+    @media (width < 768px) {
+      gap: 1rem;
+      padding-top: 0.5rem;
+    }
+  }
+
+  .liveDemoLink {
+    font-size: 1.25rem;
+
+    @media (width < 1024px) {
+      font-size: 1rem;
+    }
+
+    @media (width < 768px) {
+      font-size: var(--text-sm);
+    }
+  }
+
+  .ctaButton {
+    @media (width < 1024px) {
+      font-size: 1.25rem;
+    }
+  }
+
+  .previewContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1.25;
+    max-width: max-content;
+
+    @media (width < 1024px) {
+      flex: 1.5;
+    }
+  }
+
+  .mockDevice {
+    height: auto;
+    transform: perspective(1200px) rotateY(-15deg);
+    transform-style: preserve-3d;
+    margin: 0 auto;
+
+    @media (width < 768px) {
+      transform: none;
+    }
+  }
+
+  .mobile {
+    width: 100%;
+    max-width: 300px;
+
+    @media (width < 768px) {
+      max-width: 200px;
+      transform: translateX(12px) translateY(18px);
+    }
+
+    @media (height < 800px) {
+      max-width: 150px;
+    }
+  }
+
+  .desktop {
+    width: 100%;
+    max-width: 600px;
+
+    @media (width < 768px) {
+      max-width: 450px;
+    }
+  }
+</style>
