@@ -1,0 +1,79 @@
+---
+import { ParticlesBackground } from "@ui-components/react/ParticlesBackground";
+import { HorizontalScroll } from "./components/HorizontalScroll";
+import ProjectCard from "./components/ProjectCard/ProjectCard.astro";
+import { getEntry } from "astro:content";
+import type { ProjectsContent } from "@content/projects/schema";
+import {
+  getProjectsFromProjectsContent,
+  type Project,
+} from "@content/projects/projects";
+
+const currentLocale = Astro.currentLocale;
+if (!currentLocale) {
+  throw new Error("Current locale not found");
+}
+
+const projectsEntry = await getEntry("projects", currentLocale);
+if (!projectsEntry) {
+  throw new Error(
+    `Content entry not found. Missing entry of section: Projects`,
+  );
+}
+
+const content: ProjectsContent = projectsEntry.data;
+const projects: Project[] = getProjectsFromProjectsContent(content.projects);
+---
+
+<section class="wrapper">
+  <div class="bgWrapper">
+    <ParticlesBackground client:load moveParticlesOnHover={true} />
+  </div>
+  <HorizontalScroll client:only="load" childrenAmount={projects.length}>
+    {
+      projects.map((p) => (
+        <div class="projectCardContainer">
+          <ProjectCard
+            project={p}
+            mockDevice={p.mockDevice}
+            content={content}
+          />
+        </div>
+      ))
+    }
+  </HorizontalScroll>
+</section>
+
+<style>
+  .wrapper {
+    position: relative;
+    background-color: var(--color-bg-base);
+  }
+
+  .bgWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .projectCardContainer {
+    width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    h1 {
+      color: white;
+      pointer-events: all;
+    }
+
+    @media (width < 768px) {
+      width: 150vw;
+    }
+  }
+</style>
