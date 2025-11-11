@@ -1,0 +1,138 @@
+---
+import Icon from "@ui-components/astro/Icon/Icon.astro";
+
+interface Props {
+  label: string;
+  href: string;
+  className?: string;
+  color?: "contrast" | "accent" | "brand";
+  maxWidth?: "string" | "none";
+}
+
+const {
+  label,
+  href,
+  className,
+  color = "contrast",
+  maxWidth = "200px",
+} = Astro.props;
+
+const cssColor =
+  color === "contrast"
+    ? "var(--color-text-primary)"
+    : color === "brand"
+      ? "var(--color-brand-primary)"
+      : "var(--color-brand-accent)";
+const cssKeyframe =
+  color === "contrast"
+    ? "pulseLightPrimary"
+    : color === "brand"
+      ? "pulseLightBrand"
+      : "pulseLightAccent";
+const smallScreensMaxWidth = maxWidth === "none" ? "none" : "150px";
+const cssTextColor =
+  color === "brand" || color === "accent"
+    ? "var(--color-text-contrast)"
+    : "var(--color-bg-base)";
+const cssFilter =
+  color === "brand" || color === "accent"
+    ? "var(--filter-text-contrast)"
+    : "var(--filter-bg-base)";
+---
+
+<a
+  class:list={["button", className]}
+  href={href}
+  role="button"
+  aria-label={label}
+>
+  {label}<Icon name="arrowRight" class="icon" />
+</a>
+
+<style
+  define:vars={{
+    cssColor,
+    cssKeyframe,
+    maxWidth,
+    smallScreensMaxWidth,
+    cssTextColor,
+    cssFilter,
+  }}
+>
+  .button {
+    width: 100%;
+    max-width: var(--maxWidth);
+    pointer-events: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.75rem 1rem;
+    color: var(--cssTextColor);
+    background-color: var(--cssColor);
+    font-size: var(--text-lg);
+    border-radius: 1rem;
+    font-weight: 600;
+    transition: transform 0.2s ease-in-out;
+    margin-left: 0;
+
+    overflow: hidden;
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.4);
+    animation: var(--cssKeyframe) 3s ease-in-out infinite;
+
+    .icon {
+      filter: var(--cssFilter);
+      @media (width < 768px) {
+        width: var(--text-sm);
+        height: auto;
+      }
+    }
+
+    &:hover {
+      transform: scale(1.03);
+      background-color: var(--cssColor);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.45);
+    }
+
+    @media (width < 768px) {
+      max-width: var(--smallScreensMaxWidth);
+      padding: 0.5rem 0.75rem;
+
+      font-size: var(--text-sm);
+    }
+
+    @media (width < 500px) {
+      padding: 0.25rem;
+    }
+  }
+
+  @keyframes pulseLightPrimary {
+    0%,
+    100% {
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.25);
+    }
+    50% {
+      box-shadow: 0 0 18px rgba(255, 255, 255, 0.45);
+    }
+  }
+
+  @keyframes pulseLightAccent {
+    0%,
+    100% {
+      box-shadow: 0 0 10px rgba(123, 92, 255, 0.25);
+    }
+    50% {
+      box-shadow: 0 0 18px rgba(123, 92, 255, 0.45);
+    }
+  }
+
+  @keyframes pulseLightBrand {
+    0%,
+    100% {
+      box-shadow: 0 0 10px rgba(0, 216, 192, 0.25);
+    }
+    50% {
+      box-shadow: 0 0 18px rgba(0, 216, 192, 0.45);
+    }
+  }
+</style>
