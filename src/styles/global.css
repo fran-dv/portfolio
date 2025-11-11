@@ -45,6 +45,8 @@
   --color-text-secondary-rgb: 124, 154, 157;
   --color-text-secondary: #7c9a9d;
   --color-text-contrast: #fff;
+  --filter-text-contrast: brightness(0) saturate(100%) invert(100%) sepia(0%)
+    saturate(7500%) hue-rotate(267deg) brightness(103%) contrast(103%);
 
   --color-feedback-success: #4ade80;
   --color-feedback-warning: #facc15;
