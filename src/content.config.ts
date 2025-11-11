@@ -49,6 +49,13 @@ const footer = defineCollection({
   }),
 });
 
+const projects = defineCollection({
+  loader: glob({
+    pattern: "*.json",
+    base: "src/content/projects",
+  }),
+});
+
 export const collections = {
   hero,
   navbar,
@@ -56,4 +63,5 @@ export const collections = {
   projectsCTABanner,
   contact,
   footer,
+  projects,
 };
