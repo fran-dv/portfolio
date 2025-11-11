@@ -1,0 +1,23 @@
+{
+  "projects": [
+    {
+      "id": "bch-connect",
+      "title": "BCH Connect",
+      "shortDescription": "React library to seamlessly connect BCH wallets",
+      "mockDevice": "desktop"
+    },
+    {
+      "id": "zorro-viejo-ecommerce",
+      "title": "Zorro viejo",
+      "shortDescription": "Mobile-first full-stack e-commerce",
+      "mockDevice": "mobile"
+    },
+    {
+      "id": "mini-dapp",
+      "title": "Mini Dapp",
+      "shortDescription": "Small and simple Ethereum dApp",
+      "mockDevice": "desktop"
+    }
+  ],
+  "projectDetailsButton": "View case study"
+}
