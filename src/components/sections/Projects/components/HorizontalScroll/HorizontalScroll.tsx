@@ -28,8 +28,11 @@ export const HorizontalScroll: React.FC<Props> = ({
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  const maxTranslate = Math.max(0, (childrenAmount - 1) * vw);
-  const containerHeightVh = childrenAmount * 200;
+  const maxTranslate = Math.max(
+    0,
+    vw < 768 ? (childrenAmount - 1) * vw + 1.5 * vw : (childrenAmount - 1) * vw,
+  );
+  const containerHeightVh = childrenAmount * (vw < 768 ? 100 : 200);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -42,8 +45,10 @@ export const HorizontalScroll: React.FC<Props> = ({
     [0, -maxTranslate],
   );
 
-  const springConfig = { stiffness: 150, damping: 30, mass: 1 };
+  const stiffness = vw < 768 ? 100 : 150;
+  const springConfig = { stiffness, damping: 30, mass: 1 };
   const smoothX = useSpring(rawX, springConfig);
+  const width = vw < 768 ? childrenAmount * 2 * vw : childrenAmount * vw;
 
   return (
     <div
@@ -56,7 +61,7 @@ export const HorizontalScroll: React.FC<Props> = ({
           className="pointer-events-none flex h-full items-center"
           style={{
             x: smoothX,
-            width: `${childrenAmount * vw}px`,
+            width: `${width}px`,
             touchAction: "pan-y",
             WebkitOverflowScrolling: "touch",
           }}
