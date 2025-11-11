@@ -1,3 +1,4 @@
+import type { ProjectId } from "@content/projects/schema";
 import type { Locale } from "@/i18n/locales";
 import { getRelativeLocaleUrl } from "astro:i18n";
 
@@ -17,7 +18,7 @@ interface GetRelativeUrlOpts {
   locale: Locale;
   page: keyof typeof Paths;
   anchor?: keyof typeof MainPageAnchors;
-  dynamicParam?: string;
+  dynamicParam?: ProjectId;
 }
 
 export const getRelativeUrl = ({
@@ -45,7 +46,7 @@ export const getRelativeUrl = ({
   return url;
 };
 
-export const ProjectsStaticPaths = [
+export const ProjectsStaticPaths: Array<{ params: { project: ProjectId } }> = [
   { params: { project: "bch-connect" } },
   { params: { project: "zorro-viejo-ecommerce" } },
   { params: { project: "mini-dapp" } },
